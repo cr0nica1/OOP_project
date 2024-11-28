@@ -1,8 +1,7 @@
-// Class Player
 public class Player {
     // Attributes
     private String name;
-    private String mapnames;
+    private String currentMapName; // Current map the player is in
     private int HP;
     private int MP;
     private int attackPoint;
@@ -11,10 +10,11 @@ public class Player {
     private Item inventory; // Assuming Item is another class
     private int level;
 
+    private GameSystem gameSystem; // attribute another class
     // Constructor
-    public Player(String name, String mapnames, int HP, int MP, int attackPoint, int defensePoint, float speed, int level) {
+    public Player(String name, String currentMapName, int HP, int MP, int attackPoint, int defensePoint, float speed, int level, GameSystem gameSystem) {
         this.name = name;
-        this.mapnames = mapnames;
+        this.currentMapName = currentMapName;
         this.HP = HP;
         this.MP = MP;
         this.attackPoint = attackPoint;
@@ -22,11 +22,30 @@ public class Player {
         this.speed = speed;
         this.level = level;
         this.inventory = null; // Initially empty
+        this.gameSystem = gameSystem; // Link to the game system
     }
 
+
     // Methods
-    public void move() {
-        System.out.println(speed);
+    public void move(char direction) {
+        int newX = 0; 
+        int newY = 0; 
+
+        // Determine new coordinates based on direction
+        switch (direction) {
+            case 'W' -> // Move up
+                newY += speed;
+            case 'A' -> // Move left
+                newX -= speed;
+            case 'S' -> // Move down
+                newY -= speed;
+            case 'D' -> // Move right
+                newX += speed;
+            }
+        }
+
+        // Send movement information to the game system
+        gameSystem.processMove(this, currentMapName, newX, newY);
     }
 
     public void attack(Monster monster) { // Assuming Monster is another class
@@ -121,5 +140,25 @@ public class Player {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+
+    public String getCurrentMapName() {
+        return currentMapName;
+    }
+
+
+    public void setCurrentMapName(String currentMapName) {
+        this.currentMapName = currentMapName;
+    }
+
+
+    public GameSystem getGameSystem() {
+        return gameSystem;
+    }
+
+
+    public void setGameSystem(GameSystem gameSystem) {
+        this.gameSystem = gameSystem;
     }
 }
