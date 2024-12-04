@@ -67,7 +67,7 @@ public class Player {
     }
 
     public void wearingItem(Item item) {
-        System.out.println(name + " equied " + item.getName());
+        System.out.println(name + " equipped " + item.getName());
         // Implement logic for wearing item
     }
 
