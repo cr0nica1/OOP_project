@@ -9,6 +9,8 @@ public class Player {
     private float speed;
     private Item inventory; // Assuming Item is another class
     private int level;
+    private int currentExp;      	
+    private int expToNextLevel;  
 
     private GameSystem gameSystem; // attribute another class
     // Constructor
@@ -23,9 +25,26 @@ public class Player {
         this.level = level;
         this.inventory = null; // Initially empty
         this.gameSystem = gameSystem; // Link to the game system
+        this.currentExp = 0;
+        this.expToNextLevel = 100;
     }
 
-
+    // Default Constructor 
+    public Player(GameSystem gameSystem) {
+        this.name = "New Player";
+        this.currentMapName = "Map 0";
+        this.HP = 50; 
+        this.MP = 25;  
+        this.attackPoint = 10; 
+        this.defensePoint = 5; 
+        this.speed = 1.0f; 
+        this.level = 1; 
+        this.inventory = null; 
+        this.gameSystem = gameSystem; 
+        this.currentExp = 0;
+        this.expToNextLevel = 100;
+    }
+    
     // Methods
     public void move(char direction) {
         int newX = 0; 
@@ -160,5 +179,27 @@ public class Player {
 
     public void setGameSystem(GameSystem gameSystem) {
         this.gameSystem = gameSystem;
+    }
+    
+    public void gainexp (int exp) {
+    	System.out.println(name + " gained " + exp + " experience points!");
+    	currentExp += exp;
+    	while (currentExp >= expToNextLevel) {
+    		levelUp();
+    	}
+    }
+    
+    private void levelUp() {
+        level++;
+        currentExp -= expToNextLevel; 
+        expToNextLevel += 50; 
+        HP += 10;
+        MP += 5;
+        attackPoint += 2;
+        defensePoint += 1;
+        speed += 0.1f;
+
+        System.out.println(name + " leveled up! Now at level " + level + "!");
+        System.out.println("New stats: HP=" + HP + ", MP=" + MP + ", Attack=" + attackPoint + ", Defense=" + defensePoint + ", Speed=" + speed);
     }
 }
