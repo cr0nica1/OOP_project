@@ -7,12 +7,11 @@ public class Player {
     private int attackPoint;
     private int defensePoint;
     private float speed;
-    private Item inventory; // Assuming Item is another class
+    private Items [] inventory; // Assuming Item is another class
     private int level;
 
-    private GameSystem gameSystem; // attribute another class
     // Constructor
-    public Player(String name, String currentMapName, int HP, int MP, int attackPoint, int defensePoint, float speed, int level, GameSystem gameSystem) {
+    public Player(String name, String currentMapName, int HP, int MP, int attackPoint, int defensePoint, float speed ,int level) {
         this.name = name;
         this.currentMapName = currentMapName;
         this.HP = HP;
@@ -21,10 +20,19 @@ public class Player {
         this.defensePoint = defensePoint;
         this.speed = speed;
         this.level = level;
-        this.inventory = null; // Initially empty
-        this.gameSystem = gameSystem; // Link to the game system
+        this.inventory = new Items[5]; // Initially inventory 
     }
-
+    public Player(String name){
+        this.name=name;
+        this.currentMapName = "map_1";
+        this.HP= 1000;
+        this.MP=1000;
+        this.attackPoint=100;
+        this.defensePoint=30;
+        this.speed=1.0f;
+        this.level=1;
+        this.inventory= new Items[5];
+    }
 
     // Methods
     public void move(char direction) {
@@ -68,8 +76,8 @@ public class Player {
         this.HP += drug.getHealingAmount(); // Example healing logic
     }
 
-    public void enterMap() {
-        System.out.println(mapnames + " entered.");
+    public void enterMap(Map map) {
+        System.out.println(map.getName + " entered.");
     }
 
     public void usingSkill(Skill skill) { // Assuming Skill is another class
@@ -126,11 +134,11 @@ public class Player {
         this.speed = speed;
     }
 
-    public Item getInventory() {
-        return inventory;
+    public Items getInventory() {
+        
     }
 
-    public void setInventory(Item inventory) {
+    public void setInventory(Items inventory) {
         this.inventory = inventory;
     }
 
@@ -151,14 +159,7 @@ public class Player {
     public void setCurrentMapName(String currentMapName) {
         this.currentMapName = currentMapName;
     }
-
-
-    public GameSystem getGameSystem() {
-        return gameSystem;
-    }
-
-
-    public void setGameSystem(GameSystem gameSystem) {
-        this.gameSystem = gameSystem;
-    }
 }
+
+    
+
