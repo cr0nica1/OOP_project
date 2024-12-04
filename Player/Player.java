@@ -25,7 +25,20 @@ public class Player {
         this.gameSystem = gameSystem; // Link to the game system
     }
 
-
+    // Default Constructor 
+    public Player(GameSystem gameSystem) {
+        this.name = "New Player";
+        this.currentMapName = "Map 0";
+        this.HP = 50; 
+        this.MP = 25;  
+        this.attackPoint = 10; 
+        this.defensePoint = 5; 
+        this.speed = 1.0f; 
+        this.level = 1; 
+        this.inventory = null; 
+        this.gameSystem = gameSystem; 
+    }
+    
     // Methods
     public void move(char direction) {
         int newX = 0; 
