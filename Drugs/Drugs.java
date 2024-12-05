@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Drugs {
-    private List<Potion> potions;  // Danh sách thuốc
+    private final List<Potion> potions;  // Danh sách thuốc
 
     // Constructor khởi tạo Drugs
     public Drugs() {
@@ -13,9 +13,9 @@ public class Drugs {
     // Thêm thuốc vào Drugs
     private void addPotions() {
         // Thêm thuốc hồi máu
-        potions.add(new Potion("Health Potion", 50, "Restore 50 HP", 50, 5));
+        potions.add(new Potion("Health Potion", 50, "Restore 50 HP", 50, 5,"A"));
         // Thêm thuốc hồi mana
-        potions.add(new Potion("Mana Potion", 70, "Restore 30 MP", 30, 3));
+        potions.add(new Potion("Mana Potion", 70, "Restore 30 MP", 30, 3,"A"));
     }
 
     // Phương thức lấy tất cả các thuốc
@@ -45,8 +45,8 @@ public class Drugs {
     public static class Potion extends Items {
         private int duration; // Thời gian tác dụng (giây)
 
-        public Potion(String name, int price, String effect, int attributePoints, int duration) {
-            super(name, "Drug", price, effect, attributePoints);
+        public Potion(String name, int price, String effect, int healthRestore, int duration,String rarity) {
+            super(name, "Drug", price, effect, healthRestore,rarity);
             this.duration = duration;
         }
 
@@ -61,12 +61,6 @@ public class Drugs {
         @Override
         public String usingItems() {
             return "You used " + getName() + ". Effect: " + getEffect() + " for " + duration + " seconds.";
-        }
-
-        @Override
-        public String toString() {
-            return "Potion{name='" + getName() + "', effect='" + getEffect() +
-                    "', attributePoints=" + getAttributePoints() + ", duration=" + duration + " seconds}";
         }
     }
 }

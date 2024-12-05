@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Marketplace {
-    private List<Weapon> weapons;  // Danh sách vũ khí
-    private List<Armor> armors;    // Danh sách giáp
+    private final List<Weapon> weapons;  // Danh sách vũ khí
+    private final List<Armor> armors;    // Danh sách giáp
 
 
     // Constructor khởi tạo marketplace
