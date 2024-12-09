@@ -19,7 +19,7 @@ public class Drugs {
     }
 
     public void showPotions() {
-        System.out.println("Potions:");
+        System.out.println("Available Potions:");
         for (Potion potion : potions) {
             System.out.println(potion);
         }

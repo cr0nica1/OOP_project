@@ -23,12 +23,12 @@ public class Marketplace {
     }
 
     public void showItems() {
-        System.out.println("Weapons:");
+        System.out.println("Available Weapons:");
         for (Weapon weapon : weapons) {
             System.out.println(weapon);
         }
 
-        System.out.println("\nArmors:");
+        System.out.println("\nAvailable Armors:");
         for (Armor armor : armors) {
             System.out.println(armor);
         }

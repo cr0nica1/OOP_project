@@ -4,7 +4,7 @@ public abstract class Items {
     private int price;
     private String effect;
     private int attributePoints;
-    public String rarity;
+    private String rarity;
 
     public Items(String name, String type, int price, String effect, int attributePoints, String rarity) {
         this.name = name;
@@ -15,6 +15,7 @@ public abstract class Items {
         this.rarity = rarity;
     }
 
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -55,22 +56,12 @@ public abstract class Items {
         this.rarity = rarity;
     }
 
-    public int usingItems(String message) {
-        if (message.equalsIgnoreCase("use " + name)) {
-            System.out.println("Using item: " + name + ". Effect: " + effect);
-            return attributePoints;
-        } else {
-            System.out.println("Message not recognized for item: " + name);
-            return 0;
-        }
-    }
-
-    public abstract String usingItems(); // Phương thức abstract cần được override trong lớp con
+    // Abstract method to be implemented by subclasses
+    public abstract String usingItems();
 
     @Override
     public String toString() {
-        return "Item{name='" + name + "', type='" + type + "', price=" + price +
-                ", effect='" + effect + "', attributePoints=" + attributePoints +
-                ", rarity='" + rarity + "'}";
+        return String.format("Item{name='%s', type='%s', price=%d, effect='%s', attributePoints=%d, rarity='%s'}",
+                name, type, price, effect, attributePoints, rarity);
     }
 }

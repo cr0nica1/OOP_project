@@ -26,6 +26,11 @@ public class Weapon extends Items {
 
     @Override
     public String usingItems() {
-        return "";
+        return String.format("You equipped %s. Effect: %s", getName(), getEffect());
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + String.format(", attackSpeed=%.2f, range=%.2f", attackSpeed, range);
     }
 }

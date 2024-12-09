@@ -1,14 +1,14 @@
 public class Main {
     public static void main(String[] args) {
-        // Khởi tạo Marketplace và hiển thị vật phẩm
+        // Initialize Marketplace and show items
         Marketplace marketplace = new Marketplace();
-        marketplace.showItems(); // Hiển thị vũ khí và giáp
+        marketplace.showItems();
 
-        // Khởi tạo Drugs và hiển thị potions
+        // Initialize Drugs and show potions
         Drugs drugs = new Drugs();
-        drugs.showPotions(); // Hiển thị các potion
+        drugs.showPotions();
 
-        // Sử dụng các potion
+        // Use potions
         System.out.println(drugs.usePotion("Health Potion"));
         System.out.println(drugs.usePotion("Mana Potion"));
     }
