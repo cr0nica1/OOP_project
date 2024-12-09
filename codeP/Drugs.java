@@ -25,7 +25,7 @@ public class Drugs {
 
     // Hiển thị tất cả các thuốc
     public void showPotions() {
-        System.out.println("Potions:");
+        System.out.println("Available Potions:");
         for (Potion potion : potions) {
             System.out.println(potion);
         }
