@@ -24,37 +24,37 @@ public class Player {
     }
     public Player(String name){
         this.name=name;
-        this.currentMapName = "map_1";
+        this.currentMapName=null;
         this.HP= 1000;
         this.MP=1000;
         this.attackPoint=100;
         this.defensePoint=30;
         this.speed=1.0f;
         this.level=1;
-        this.inventory= new Items[5];
+        this.inventory= null;
     }
 
 
     // Methods
-    public void move(char direction) {
+    public void move(String direction,gameSystem sys) {
         int newX = 0; 
         int newY = 0; 
 
         // Determine new coordinates based on direction
         switch (direction) {
-            case 'W' -> // Move up
+            case "W" -> // Move up
                 newY += speed;
-            case 'A' -> // Move left
+            case "A" -> // Move left
                 newX -= speed;
-            case 'S' -> // Move down
+            case "S" -> // Move down
                 newY -= speed;
-            case 'D' -> // Move right
+            case "D" -> // Move right
                 newX += speed;
-            }
+            
         }
-
+        
         // Send movement information to the game system
-        gameSystem.processMove(this, currentMapName, newX, newY);
+        sys.progressMove( newX, newY);
     }
 
     public void attack(Monster monster) { // Assuming Monster is another class
@@ -62,17 +62,17 @@ public class Player {
         monster.takeDamage(attackPoint);
     }
 
-    public void pickupItem(Item item) {
+    public void pickupItem(Items item) {
         System.out.println(name + " picked up " + item.getName());
-        this.inventory = item;
+        this.inventory.add(item);
     }
 
-    public void wearingItem(Item item) {
+    public void wearingItem(Items item) {
         System.out.println(name + " equipped " + item.getName());
         // Implement logic for wearing item
     }
 
-    public void usingDrug(Drug drug) { // Assuming Drug is another class
+    public void usingDrug(Potion Potion) { // Assuming Drug is another class
         System.out.println(name + " used: " + drug.getName());
         this.HP += drug.getHealingAmount(); // Example healing logic
     }
@@ -81,7 +81,7 @@ public class Player {
         System.out.println(map.getName + " entered.");
     }
 
-    public void usingSkill(Skill skill) { // Assuming Skill is another class
+    public void usingSkill(Skills skill) { // Assuming Skill is another class
         System.out.println(name + " used skill: " + skill.getName());
         // Implement skill logic
     }
@@ -133,14 +133,16 @@ public class Player {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+
     }
 
-    public Items getInventory() {
-        
+    public Items [] getInventory() {
+        return inventory;
     }
 
-    public void setInventory(Items inventory) {
+    public void setInventory(Items[] inventory,gameSystem sys) {
         this.inventory = inventory;
+        sys.updateAbility();
     }
 
     public int getLevel() {
