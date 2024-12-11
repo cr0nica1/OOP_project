@@ -34,6 +34,7 @@ public class Player {
         this.inventory= new Items[5];
     }
 
+
     // Methods
     public void move(char direction) {
         int newX = 0; 
