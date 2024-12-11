@@ -1,36 +1,42 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Marketplace {
-    private final List<Weapon> weapons;
-    private final List<Armor> armors;
+    private final Map<String, Items> items;
 
     public Marketplace() {
-        weapons = new ArrayList<>();
-        armors = new ArrayList<>();
-        addWeapons();
-        addArmors();
+        items = new HashMap<>();
+        addItems();
     }
 
-    private void addWeapons() {
-        weapons.add(new Weapon("Axe of Power", 1200, "Hit", 70, "B+", 1.0, 2));
-        weapons.add(new Weapon("Machine Gun", 2000, "Shoot", 120, "A", 7.6, 4));
+    private void addItems() {
+        addItem(new Weapon("Axe of Power", 1200, "Hit", 70, "B+", 1.0, 2));
+        addItem(new Weapon("Machine Gun", 2000, "Shoot", 120, "A", 7.6, 4));
+        addItem(new Armor("Shield of Valor", 800, "Blocks attacks", 40, "A"));
+        addItem(new Armor("Helmet of Wisdom", 500, "Increases defense", 30, "B"));
+        addItem(new Potion("Health Potion", 50, "Restore 50 HP", 50, 5, "A"));
     }
 
-    private void addArmors() {
-        armors.add(new Armor("Shield of Valor", 800, "Blocks attacks", 40, "A"));
-        armors.add(new Armor("Helmet of Wisdom", 500, "Increases defense", 30, "B"));
+    private void addItem(Items item) {
+        items.put(item.getName().toLowerCase(), item);
     }
 
     public void showItems() {
-        System.out.println("Available Weapons:");
-        for (Weapon weapon : weapons) {
-            System.out.println(weapon);
+        System.out.println("Marketplace Items:");
+        for (Items item : items.values()) {
+            System.out.println(item);
         }
+    }
 
-        System.out.println("\nAvailable Armors:");
-        for (Armor armor : armors) {
-            System.out.println(armor);
+    public Items getItemByName(String itemName) {
+        return items.get(itemName.toLowerCase());
+    }
+
+    public String useItem(String itemName) {
+        Items item = getItemByName(itemName);
+        if (item != null) {
+            return item.usingItems();
         }
+        return "Item not found.";
     }
 }

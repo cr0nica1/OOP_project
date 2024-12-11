@@ -1,10 +1,26 @@
 public class Potion extends Items {
-    public Potion(String name, int price, String effect, int healthRestore, String rarity) {
-        super(name, "Potion", price, effect, healthRestore, rarity);
+    private int duration; // Thời gian tác dụng (giây)
+
+    public Potion(String name, int price, String effect, int healthRestore, int duration, String rarity) {
+        super(name, "Drug", price, effect, healthRestore, rarity);
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     @Override
     public String usingItems() {
-        return String.format("You used %s. Effect: %s", getName(), getEffect());
+        return "You used the " + getName() + ". Effect: " + getEffect() + " lasting for " + duration + " seconds.";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", duration=" + duration;
     }
 }

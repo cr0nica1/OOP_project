@@ -15,7 +15,6 @@ public abstract class Items {
         this.rarity = rarity;
     }
 
-    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -56,12 +55,12 @@ public abstract class Items {
         this.rarity = rarity;
     }
 
-    // Abstract method to be implemented by subclasses
     public abstract String usingItems();
 
     @Override
     public String toString() {
-        return String.format("Item{name='%s', type='%s', price=%d, effect='%s', attributePoints=%d, rarity='%s'}",
-                name, type, price, effect, attributePoints, rarity);
+        return "Item{name='" + name + "', type='" + type + "', price=" + price +
+                ", effect='" + effect + "', attributePoints=" + attributePoints +
+                ", rarity='" + rarity + "'}";
     }
 }

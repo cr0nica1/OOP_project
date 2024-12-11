@@ -1,15 +1,13 @@
 public class Main {
     public static void main(String[] args) {
-        // Initialize Marketplace and show items
+        // Khởi tạo Marketplace
         Marketplace marketplace = new Marketplace();
         marketplace.showItems();
 
-        // Initialize Drugs and show potions
-        Drugs drugs = new Drugs();
-        drugs.showPotions();
-
-        // Use potions
-        System.out.println(drugs.usePotion("Health Potion"));
-        System.out.println(drugs.usePotion("Mana Potion"));
+        // Truy xuất và sử dụng vật phẩm theo tên
+        System.out.println(marketplace.useItem("Axe of Power"));
+        System.out.println(marketplace.useItem("Health Potion"));
+        System.out.println(marketplace.useItem("Helmet of Wisdom"));
+        System.out.println(marketplace.useItem("Non-existent Item"));
     }
 }

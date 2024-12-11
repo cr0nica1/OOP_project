@@ -5,6 +5,6 @@ public class Armor extends Items {
 
     @Override
     public String usingItems() {
-        return String.format("You equipped %s. Effect: %s", getName(), getEffect());
+        return "You equipped " + getName() + ". Effect: " + getEffect();
     }
 }
