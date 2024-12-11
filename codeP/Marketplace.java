@@ -14,7 +14,6 @@ public class Marketplace {
         addItem(new Weapon("Machine Gun", 2000, "Shoot", 120, "A", 7.6, 4));
         addItem(new Armor("Shield of Valor", 800, "Blocks attacks", 40, "A"));
         addItem(new Armor("Helmet of Wisdom", 500, "Increases defense", 30, "B"));
-        addItem(new Potion("Health Potion", 50, "Restore 50 HP", 50, 5, "A"));
     }
 
     private void addItem(Items item) {
