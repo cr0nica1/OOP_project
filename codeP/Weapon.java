@@ -1,11 +1,12 @@
 public class Weapon extends Items {
     private double attackSpeed;
     private float range;
-    private int attackPower;
+    public int attackPower;
 
     public Weapon(String name, int price, String effect, int attackPower, String rarity, double attackSpeed, float range) {
         super(name, "Weapon", price, effect, attackPower, rarity);
         this.attackSpeed = attackSpeed;
+        this.attackPower=attackPower;
         this.range = range;
     }
     public int getattackPower(){
