@@ -8,6 +8,6 @@ public class Main {
         System.out.println(marketplace.useItem("Axe of Power"));
         System.out.println(marketplace.useItem("Health Potion"));
         System.out.println(marketplace.useItem("Helmet of Wisdom"));
-        System.out.println(marketplace.useItem("Non-existent Item"));
+        System.out.println(marketplace.useItem("Skyward Atlas"));
     }
 }

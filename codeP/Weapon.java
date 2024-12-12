@@ -1,11 +1,19 @@
 public class Weapon extends Items {
     private double attackSpeed;
     private float range;
+    private int attackPower;
 
     public Weapon(String name, int price, String effect, int attackPower, String rarity, double attackSpeed, float range) {
         super(name, "Weapon", price, effect, attackPower, rarity);
         this.attackSpeed = attackSpeed;
         this.range = range;
+    }
+    public int getattackPower(){
+        return attackPower;
+
+    }
+    public void setAttackPower(int attackPower){
+        this.attackPower=attackPower;
     }
 
     public double getAttackSpeed() {
@@ -26,7 +34,7 @@ public class Weapon extends Items {
 
     @Override
     public String usingItems() {
-        return "Equipped weapon: " + getName() + ". Effect: " + getEffect() +
+        return "You are using: " + getName() + ". Effect: " + getEffect() +".BaseDamage:"+getattackPower()+
                ", Attack Speed: " + attackSpeed + ", Range: " + range;
     }
 }

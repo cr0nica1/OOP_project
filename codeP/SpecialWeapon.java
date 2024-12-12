@@ -1,24 +1,27 @@
 public class SpecialWeapon extends Weapon {
-    private final int specialEffectDamage;
-    private final double effectDuration;
+    private final String specialEffectName;
 
-    public SpecialWeapon(String name, int price, String effect, int attackPower, String rarity, double attackSpeed, float range, 
-                         int specialEffectDamage, double effectDuration) {
+    public SpecialWeapon(String name, int price, String effect, int attackPower, String rarity,
+                         double attackSpeed, float range, String specialEffectName) {
         super(name, price, effect, attackPower, rarity, attackSpeed, range);
-        this.specialEffectDamage = specialEffectDamage;
-        this.effectDuration = effectDuration;
+        this.specialEffectName = specialEffectName;
     }
 
-    public int getSpecialEffectDamage() {
-        return specialEffectDamage;
-    }
-
-    public double getEffectDuration() {
-        return effectDuration;
+    // Tính tổng damage bao gồm cả damage từ hiệu ứng đặc biệt
+    public int getTotalAttackDamage() {
+        return getattackPower() + SpecialEffect.getEffectDamage(specialEffectName);
     }
 
     @Override
-    public String toString() {
-        return super.toString() + String.format(", specialEffectDamage=%d, effectDuration=%.2f", specialEffectDamage, effectDuration);
+    public String usingItems() {
+        StringBuilder result = new StringBuilder();
+        result.append("You are using special weapon: ").append(getName())
+                .append("\nBase Damage: ").append(getattackPower())
+                .append("\nAttack Speed: ").append(getAttackSpeed())
+                .append("\nRange: ").append(getRange())
+                .append("\nSpecial Effect: ").append(SpecialEffect.getEffectDetails(specialEffectName))
+                .append("\nTotal Damage: ").append(getTotalAttackDamage());
+
+        return result.toString();
     }
 }
