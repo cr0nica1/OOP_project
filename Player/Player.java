@@ -108,10 +108,37 @@ public class Player {
      
     }
 
-    public void castSkill(Skills skill) {
-        // Implement skill logic
-    }
+    public String castSkill(Skills skill, List<Monster> monsters) {
+        if (this.MP < skill.getMPcost()){
+            return "Het tien!";
+        }
+        this.MP -= skill.getMPcost();
 
+        Monster target = null;
+        double maxHP = 0;
+
+        for(Monster monster : monsters){
+            if (distanceTo(monster) <= skill.getSkillRange() && monster.getHP() > maxHP){
+                target = monster;
+                maxHP = monster.getHP();
+            }
+        }
+        if (target == null){
+            return "No monster within range to cast skills.";
+        }
+
+        target.takeDamage(skill.getSkillPower());
+        System.out.println("Casting " + skill.getSkillName() + " on " + target.getName() + "! Dealt " + skill.getSkillPower() + " damage.\n");
+
+        for (Monster monster : monsters)    {
+            if (monster != target && distanceTo(monster) <= skill.getSkillZone()) {
+                int reduceDamge = (int)(skill.getSkillPower() * 0.5);
+                monster.takeDamage(reduceDamge);
+                System.out.println("Dealt " + reduceDamge + " damage to " + monster.getName() + " within the skill zone. \n");
+            }
+        }
+        return "Skill cast successfully!";
+    }
     // Getters and setters
     public float getRange(){
         return range;
