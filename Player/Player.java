@@ -10,16 +10,20 @@ public class Player {
     private int attackPoint;
     private int defensePoint;
     private float speed;
-    private List<Items> inventory; // Dynamic inventory
+    private List<Items> inventory;
+    private List<Skills> availableSkill; 
     private int level;
+    private int gold;
     private int x;
     private int y;
     private float range;
+
     // Static attribute
     private static int max_items_number = 16; // Maximum items in inventory
-
+    private static int max_skills_number = 5; // Maximum skills in availableSkill
+   
     // Constructor
-    public Player(String name, String currentMapName, int HP, int MP, int attackPoint, int defensePoint, float speed, int level) {
+    public Player(String name, String currentMapName, int HP, int MP, int attackPoint, int defensePoint, float speed, int level, int gold) {
         this.name = name;
         this.currentMapName = currentMapName;
         this.HP = HP;
@@ -28,40 +32,55 @@ public class Player {
         this.defensePoint = defensePoint;
         this.speed = speed;
         this.level = level;
+        this.gold=gold;
         this.inventory = new ArrayList<>();
+        this.availableSkill= new ArrayList<>();
         this.x = 0;
         this.y = 0;
-        this.range=1.0f;
+
+        this.range = 1.0f;
+
     }
 
     public Player(String name) {
-        this(name, null, 1000, 1000, 100, 30, 1.0f, 1);
+        this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10000);
     }
 
     // Methods
     public void move(String direction, gameSystem sys) {
+        int oldx=this.x;
+        int oldy=this.y;
         switch (direction.toUpperCase()) {
-            case "W" -> y -= speed;
-            case "A" -> x -= speed;
-            case "S" -> y += speed;
-            case "D" -> x += speed;
+            case "A" -> y -= speed;
+            case "W" -> x -= speed;
+            case "D" -> y += speed;
+            case "S" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }
-        System.out.println("test");
-        sys.processMove(x, y);
+        sys.processMove(x, y,oldx,oldy);
     }
+    
+
 
     public void attack(Monster monster) {
         int damage=attackPoint-monster.getDefense();
         if (damage>0) {
             monster.setHP(monster.getHP()-damage);
-            System.out.println("Người chơi gây ra " + damage + " sát thương!");
+            System.out.println("Player " + name + "dealt "+ damage + " damages!");
         }
         
     }
     public boolean checking_inventory( Items items){
         for( Items m:inventory){
             if (items.getType()==m.getType()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean cheking_skill(Skills skill){
+        for( Skills m:availableSkill){
+            if (skill.getSkillName()==m.getSkillName()) {
                 return false;
             }
         }
@@ -207,12 +226,31 @@ public class Player {
         }
     }
 
+    public List<Skills> getAvailableSkill() { 
+        return availableSkill; 
+    }
+    
+    public void setAvailableSkill(List<Skills> availableSkill) {
+        if (availableSkill.size() <= max_skills_number) {
+            this.availableSkill = availableSkill;
+        } else {
+            System.out.println("Skill list exceeds maximum allowed size of " + max_skills_number + ".");
+        }
+    }
     public int getLevel() {
         return level;
     }
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
     }
 
     public String getCurrentMapName() {
@@ -246,4 +284,14 @@ public class Player {
     public static void setMaxItemsNumber(int maxItemsNumber) {
         max_items_number = maxItemsNumber;
     }
+    
+    public static int getMaxSkillsNumber() {
+        return max_skills_number;
+    }
+
+    public static void setMaxSkillsNumber(int maxSkillsNumber) {
+        max_skills_number = maxSkillsNumber;
+    }
+
 }
+

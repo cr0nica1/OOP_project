@@ -33,11 +33,23 @@ public class gameSystem {
             }
         }
     }
-    public void processMove(int newX,int newY){
-        this.savepointx=newX;
-        this.savepointy=newY;
-        changemap();
-        currentMap.displayGrid();
+    public void processMove(int newX,int newY,int oldX, int oldY){
+        if (newX<currentMap.getGridWidth()&&newX>=0&&newY<currentMap.getGridHeight()&&newY>=0) {
+            
+            if (currentMap.getGrid()[newX][newY]==0) {
+                
+            
+            this.savepointx=newX;
+            this.savepointy=newY;
+            changemap();
+            currentMap.updatePlayerPosition(oldX, oldY, newX, newY);
+            }
+        }
+        else{
+            player.setX(oldX);
+            player.setY(oldY);
+            currentMap.displayGrid();
+        }
     }
     public void endgame(){
         System.exit(0);
@@ -60,50 +72,92 @@ public class gameSystem {
         }
         System.out.println("Invalid item name!");
     }
+    public void process_learn_skill(AncientTemple temple,Scanner scan){
+        temple.showSkill();
+        while (true) {
+            String instruction=scan.nextLine();
+            if (instruction.equals("learn skill")&& player.getAvailableSkill().size()<Player.getMaxSkillsNumber()) {
+                System.out.println("type skill number: ");
+                int order=scan.nextInt();
+                List<Skills> re=player.getAvailableSkill();
+                if (player.cheking_skill(temple.getSkillsList().get(order))) {
+                    if (player.getGold()>=temple.getSkillsList().get(order).getPrice()) {
+                        player.setGold(player.getGold()-temple.getSkillsList().get(order).getPrice());
+                        re.add(temple.getSkillsList().get(order));
+                        player.setAvailableSkill(re);
+                        System.out.println("Learning "+temple.getSkillsList().get(order).getSkillName()+" success!");
+                    }else{
+                        System.out.println("Not enough money!");
+                    }
+                }else{
+                    System.out.println(temple.getSkillsList().get(order).getSkillName()+" is available!");
+                }
+            }
+            if (instruction.equals("exit")) {
+                System.out.println("Exitting temple!!!");
+                break;
+            }
+        }
+    }
     public void processing_market(Marketplace market,Scanner scan){
      
         market.showItems();
         while (true) {
 
-                    
-                    String instruction=scan.nextLine();
                    
-                    if (instruction.equals("buy weapon")&&player.getInventory().size()<Player.getMaxItemsNumber()) {
-                        System.out.println("type weapon number: ");
-                        int order=scan.nextInt();
-                        List<Items> re= player.getInventory();
-                        if (player.checking_inventory(market.getWeapons().get(order))) {
+                    String instruction=scan.nextLine();
+                    
+                        if (instruction.equals("buy weapon")&&player.getInventory().size()<Player.getMaxItemsNumber()) {
+                            System.out.println("type weapon number: ");
+                            int order=scan.nextInt();
+                            List<Items> re= player.getInventory();
+                            if (player.checking_inventory(market.getWeapons().get(order))) {
+                                if (player.getGold()>=market.getWeapons().get(order).getPrice()) {
                             
-                            re.add(market.getWeapons().get(order));
-                            player.setInventory(re, this); 
-                            System.out.println("Buying "+market.getWeapons().get(order).getName()+" success!");
+                                    player.setGold(player.getGold()-market.getWeapons().get(order).getPrice());
+                                    re.add(market.getWeapons().get(order));
+                                    player.setInventory(re, this); 
+                                    System.out.println("Buying "+market.getWeapons().get(order).getName()+" success!");
+                                continue;
+                            }
+                            else{
+                                System.out.println("Not enough money!");
+                                continue;
+                            }
                         }
                         else{
-                            System.out.println(market.getWeapons().get(order).getType()+" is equipped!");
+                                System.out.println(market.getWeapons().get(order).getType()+" is equipped!");
+                            continue;
                         }
-                        continue; 
+                         
                                    
                     }
-                     if (instruction.equals("buy armor") && player.getInventory().size()<Player.getMaxItemsNumber()) {
-                        System.out.println("type armor number: ");
-                        int order=scan.nextInt();
-                        List<Items> re= player.getInventory();
-                        if (player.checking_inventory(market.getArmors().get(order))) {
-                            
+                        if (instruction.equals("buy armor") && player.getInventory().size()<Player.getMaxItemsNumber()) {
+                            System.out.println("type armor number: ");
+                            int order=scan.nextInt();
+                            List<Items> re= player.getInventory();
+                            if (player.checking_inventory(market.getArmors().get(order))) {
+                                if (player.getGold()>=market.getArmors().get(order).getPrice()) {
+                                
+                                    player.setGold(player.getGold()-market.getArmors().get(order).getPrice());
                         
-                        re.add(market.getArmors().get(order));
-                        player.setInventory(re, this);
-                        System.out.println("Buying "+market.getArmors().get(order).getName()+" success|");
-                    }   else{
-                        System.out.println(market.getArmors().get(order).getType()+ " is equipped!");
-                    }
-                        continue;
-                    }
-                    if (instruction.equals("exit market")) {
-                        System.out.println("Exitting the Marketplay");
-                        break;
-                    }
-                    System.out.println("Invalid action!!");
+                                    re.add(market.getArmors().get(order));
+                                    player.setInventory(re, this);
+                                    System.out.println("Buying "+market.getArmors().get(order).getName()+" success|");
+                                }else{
+                                    System.out.println("Not enough money!");
+                                }
+
+                        }   else{
+                                System.out.println(market.getArmors().get(order).getType()+ " is equipped!");
+                            }
+                    
+                        }
+                        if (instruction.equals("exit")) {
+                            System.out.println("Exitting the Marketplace");
+                            break;
+                        }
+                           
                     
                 }
                 
@@ -117,12 +171,19 @@ public class gameSystem {
                 System.out.println("type potion number: ");
                 int order=scan.nextInt();
                 List<Items> re= player.getInventory();
+                if (player.getGold()>=drugs.getPotions().get(order).getPrice()) {
+                    
+                
                 re.add(drugs.getPotions().get(order));
                 player.setInventory(re, this);
-                System.out.println("test");
+                System.out.println("Buying "+drugs.getPotions().get(order).getName()+" success!");
+                
+                }else{
+                    System.out.println("Not enough money!");
+                }
                 continue;
             }
-             if (instruction.equals("exit drugs")) {
+             if (instruction.equals("exit")) {
                 System.out.println("Exitting drugstore!!");
                 break;
             }
@@ -136,12 +197,15 @@ public class gameSystem {
             player.attack(monster);
             System.out.println(monster.toString());
             currentMap.displayGrid();
+        }else{
+            System.out.println("Target out of range!");
         }
+
     }
-    public Monster target(Monster[] monster,int x, int y){
-        for(int i=0;i<monster.length;i++){
-            if (x==monster[i].getX()&&y==monster[i].getY()) {
-                return monster[i];
+    public Monster target(List<Monster> monster,int x, int y){
+        for(int i=0;i<monster.size();i++){
+            if (x==monster.get(i).getX()&&y==monster.get(i).getY()) {
+                return monster.get(i);
             }
         }
         return null;

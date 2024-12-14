@@ -7,10 +7,10 @@ public class Monster {
     private float speed; // Tốc độ di chuyển
     private int x, y; // Tọa độ
     private int initialX, initialY; // Tọa độ khởi đầu
-    private int directionX, directionY; // Hướng di chuyển
+    
 
     // Constructor
-    public Monster(String name, int HP, int attackPoint, int defense, float speed, int x, int y, int directionX, int directionY) {
+    public Monster(String name, int HP, int attackPoint, int defense, float speed, int x, int y) {
         this.name = name;
         this.HP = HP;
         this.attackPoint = attackPoint;
@@ -20,15 +20,12 @@ public class Monster {
         this.y = y;
         this.initialX = x;
         this.initialY = y;
-        this.directionX = directionX;
-        this.directionY = directionY;
+
     }
 
     // Phương thức di chuyển
     public void move() {
         // Cập nhật tọa độ dựa trên tốc độ và hướng di chuyển
-        x += speed * directionX;
-        y += speed * directionY;
 
         // In ra thông tin di chuyển và tọa độ mới của quái vật
         System.out.println(name + " đang di chuyển với tốc độ: " + speed + ", tọa độ mới: (" + x + ", " + y + ")");
@@ -45,25 +42,12 @@ public class Monster {
         }
     }
 
-    // Phương thức hồi sinh
-    public void respawn() {
-        this.x = initialX;
-        this.y = initialY;
-        System.out.println(name + " đã hồi sinh tại (" + x + ", " + y + ")");
-    }
-
  
-    public void reduceHP(int amount) {
-        this.HP -= amount;
-        if (this.HP <= 0) {
-            System.out.println(name + " đã chết và sẽ hồi sinh sau 5 giây.");
-            try {
-                Thread.sleep(5000); // Chờ 5 giây
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            respawn(); // Hồi sinh sau khi chết
+    public Boolean die(){
+        if (HP==0) {
+            return true;
         }
+        return false;
     }
     @Override
     public String toString() {
@@ -72,6 +56,13 @@ public class Monster {
     }
 
     // Getter và Setter nếu cần
+    public int getInitX(){
+        return initialX;
+    }
+    public int getInitY(){
+        return initialY;
+
+    }
     public int getHP() {
         return HP;
     }
@@ -119,21 +110,7 @@ public class Monster {
     public void setY(int y) {
         this.y = y;
     }
-    public int getDirectionX() {
-        return directionX;
-    }
 
-    public void setDirectionX(int directionX) {
-        this.directionX = directionX;
-    }
-
-    public int getDirectionY() {
-        return directionY;
-    }
-
-    public void setDirectionY(int directionY) {
-        this.directionY = directionY;
-    }
     public String getName(){
         return name;
     }
