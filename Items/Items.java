@@ -22,6 +22,9 @@ public class Items {
     public void setName(String name) {
         this.name = name;
     }
+    public String getType(){
+        return type;
+    }
 
     public int getPrice() {
         return price;
