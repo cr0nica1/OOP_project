@@ -72,9 +72,9 @@ public class Player {
         // Implement logic for wearing item
     }
 
-    public void usingDrug(Potion Potion) { // Assuming Drug is another class
+    public void usingDrug(Potion potion) { // Assuming Drug is another class
         System.out.println(name + " used: " + drug.getName());
-        this.HP += drug.getHealingAmount(); // Example healing logic
+        this.HP += potion.getHealingAmount(); // Example healing logic
     }
 
     public void enterMap(Map map) {
