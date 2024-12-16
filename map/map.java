@@ -5,6 +5,7 @@ public class map {
     private monster[] monsters; // Mảng quái vật
     private int endpointX; // Tọa độ x của điểm kết thúc
     private int endpointY; // Tọa độ y của điểm kết thúc
+    private map nextMap;
 
     // Constructor
     public map() {
@@ -31,7 +32,7 @@ public class map {
     }
 
     // Phương thức load map
-    public void loadMap(map nextMap) {
+    public void loadMap() {
         this.grid = nextMap.grid; // Tải grid từ bản đồ tiếp theo
         this.monsters = nextMap.monsters; // Tải quái vật từ bản đồ tiếp theo
         this.endpointX = nextMap.endpointX; // Cập nhật điểm kết thúc
@@ -57,16 +58,14 @@ public class map {
     }
 
     // Phương thức kiểm tra điểm kết thúc
-    public void checkEndpoint(int x, int y) {
-        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) {
-            System.out.println("Vị trí ngoài phạm vi.");
-            return;
-        }
+    public boolean checkEndpoint(int x, int y) {
+
 
         if (x == endpointX && y == endpointY) {
             System.out.println("Đã đến điểm kết thúc tại (" + x + ", " + y + ")");
+            return true;
         } else {
-            System.out.println("Không phải điểm kết thúc.");
+            return false;
         }
     }
     // Getter cho kích thước grid
@@ -95,20 +94,8 @@ public class map {
         return endpointY;
     }
 
-    public static void main(String[] args) {
-        // Tạo đối tượng map1 với constructor cụ thể
-        map map1 = new map();
-
-        // Hiển thị thông tin về bản đồ map1
-        displayMapInfo(map1);
-
-        // Kiểm tra điểm kết thúc
-        map1.checkEndpoint(4, 4); // Thử kiểm tra điểm kết thúc
-        map1.checkEndpoint(2, 2); // Thử kiểm tra điểm không phải điểm kết thúc
-    }
-
     // Phương thức hiển thị thông tin về bản đồ
-    private static void displayMapInfo(map gameMap) {
+    private void displayMapInfo(map gameMap) {
         System.out.println("Thông tin bản đồ:");
         System.out.println("Kích thước: " + gameMap.getGridWidth() + "x" + gameMap.getGridHeight());
         System.out.println("Điểm kết thúc: (" + gameMap.getEndpointX() + ", " + gameMap.getEndpointY() + ")");

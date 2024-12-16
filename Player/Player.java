@@ -12,8 +12,8 @@ public class Player {
     private float speed;
     private List<Items> inventory; // Dynamic inventory
     private int level;
-    private int x; // Player's current X coordinate
-    private int y; // Player's current Y coordinate
+    private int x;
+    private int y;
 
     // Static attribute
     private static int max_items_number = 16; // Maximum items in inventory
@@ -40,18 +40,22 @@ public class Player {
     // Methods
     public void move(String direction, gameSystem sys) {
         switch (direction.toUpperCase()) {
-            case "W" -> y += speed;
-            case "A" -> x -= speed;
-            case "S" -> y -= speed;
-            case "D" -> x += speed;
+            case "w" -> y += speed;
+            case "a" -> x -= speed;
+            case "s" -> y -= speed;
+            case "d" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }
         sys.progressMove(x, y);
     }
 
     public void attack(Monster monster) {
-        System.out.println(name + " is attacking " + monster.getName());
-        monster.takeDamage(attackPoint);
+        int damage=attackPoint-monster.getDefense();
+        if (damage>0) {
+            monster.setHP(monster.getHP()-damage);
+            System.out.println("Người chơi gây ra " + damage + " sát thương!");
+        }
+        
     }
 
     public void pickupItem(Items item) {
@@ -68,18 +72,28 @@ public class Player {
         // Implement item effect logic
     }
 
-    public void usingDrug(Potion potion) {
-        System.out.println(name + " used: " + potion.getName());
-        // Implement potion effect logic
+    public void usingDrug(Potion potion) { // Assuming Drug is another class
+        for(int i=0;i<this.inventory.size();i++){
+            if (this.inventory.get(i).getType()=="Drug") {
+                Potion drug=(Potion) this.inventory.get(i);
+                for (int j=0;j<drug.getDuration();j++){
+                    this.setHP(this.getHP()+drug.getAttributePoints());
+                    try{
+                        Thread.sleep(1000);
+                    }catch(InterruptedException e){   
+                        System.err.println(e.getMessage());                     
+                    }
+                }
+            }
+        }
     }
 
-    public void enterMap(Map map) {
-        System.out.println(name + " entered " + map.getName());
-        this.currentMapName = map.getName();
+    public void enterMap(map map) {
+        System.out.println(name + " entered " + map.getClass());
+     
     }
 
     public void castSkill(Skills skill) {
-        System.out.println(name + " used skill: " + skill.getName());
         // Implement skill logic
     }
 
@@ -136,7 +150,7 @@ public class Player {
         return inventory;
     }
 
-    public void setInventory(List<Items> inventory, GameSystem sys) {
+    public void setInventory(List<Items> inventory, gameSystem sys) {
         if (inventory.size() <= max_items_number) {
             this.inventory = inventory;
             sys.updateAbility();

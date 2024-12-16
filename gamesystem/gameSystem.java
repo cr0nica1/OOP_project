@@ -17,24 +17,13 @@ public class gameSystem {
 
     public void updateAbility(){
         for(int i=0;i<=4;i++){
-            Items items=player.getInventory()[i];
+            Items items=player.getInventory().get(i);
             String fetch=items.getType();
             if (fetch=="Weapon") {
                 player.setAttackPoint(player.getAttackPoint()+items.getAttributePoints());;
             }
             if (fetch=="Armor") {
                 player.setDefensePoint(player.getDefensePoint()+items.getAttributePoints());;
-            }
-            if (fetch=="Drug") {
-                Potion drug= (Potion)items;
-                for (int j=0;j<drug.getDuration();j++){
-                    player.setHP(player.getHP()+drug.getAttributePoints());
-                    try{
-                        Thread.sleep(1000);
-                    }catch(InterruptedException e){   
-                        System.err.println(e.getMessage());                     
-                    }
-                }
             }
         }
     }
@@ -47,8 +36,8 @@ public class gameSystem {
         System.exit(0);
     }
     public void changemap(){
-        if (currentMap.checkendpoint()==true) {
-            currentMap=currentMap.nextmap();
+        if (currentMap.checkEndpoint(savepointx, savepointy)==true) {
+            currentMap=currentMap.loadMap();;
         }
     }
 }
