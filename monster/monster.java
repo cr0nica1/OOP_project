@@ -22,9 +22,9 @@ public class Monster {
 
     // Phương thức tấn công người chơi
     public void attack(Player player) {
-        int damage = attackPoint - player.xgetDefense(); // Tính sát thương
+        int damage = attackPoint - player.getDefensePoint(); // Tính sát thương
         if (damage > 0) {
-            player.reduceHP(damage); // Giảm HP của người chơi
+            player.setHP(player.getHP()-damage);; // Giảm HP của người chơi
             System.out.println("Quái vật tấn công người chơi và gây ra " + damage + " sát thương!");
         } else {
             System.out.println("Tấn công không có hiệu lực!");
@@ -32,28 +32,13 @@ public class Monster {
     }
 
     // Phương thức sử dụng kỹ năng
-    public void usingskill(Skill skill) {
+    public void usingskill(Skills skill) {
         // Logic sử dụng kỹ năng
-        System.out.println("Quái vật sử dụng kỹ năng: " + skill.getName());
-        // Có thể thêm logic để áp dụng hiệu ứng của kỹ năng
+
+        System.out.println("Quái vật sử dụng kỹ năng: " + skill.getSkillName());
+        // Có thể thêm logic để áp dụng hiệu ứng của kỹ năng        
     }
-    public static void main(String[] args) {
-        // Khởi tạo các quái vật với số liệu cụ thể
-        Monster goblin = new Monster("Goblin", 50, 10, 5, 6);
-        Monster troll = new Monster("Troll", 80, 15, 10, 4);
-        Monster dragon = new Monster("Dragon", 150, 25, 15, 3);
-
-        // Hiển thị thông tin quái vật
-        goblin.displayInfo();
-        troll.displayInfo();
-        dragon.displayInfo();
-
-        // Di chuyển quái vật
-        goblin.move();
-        troll.move();
-        dragon.move();
-    }
-
+    
     private void displayInfo() {
     }
 

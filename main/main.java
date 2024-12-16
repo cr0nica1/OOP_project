@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -45,12 +46,16 @@ public class Main {
                     if (instruction=="buy weapon") {
                         System.out.println("type weapon number: ");
                         int order=scan.nextInt();
-                        mainplayer.setInventory(mainplayer.getInventory().add(market.getWeapons().get(order)), sys);                       
+                        List<Items> re= mainplayer.getInventory();
+                        re.add(market.getWeapons().get(order));
+                        mainplayer.setInventory(re, sys);                       
                     }
                     else if (instruction=="buy armor") {
                         System.out.println("type armor number: ");
                         int order=scan.nextInt();
-                        mainplayer.setInventory(mainplayer.getInventory().add(market.getArmors().get(order)), sys);
+                        List<Items> re= mainplayer.getInventory();
+                        re.add(market.getArmors().get(order));
+                        mainplayer.setInventory(re, sys);
                     }
                     else if (instruction=="exit market") {
                         System.out.println("Exitting the Marketplay");
@@ -67,10 +72,12 @@ public class Main {
                 instruction=scan.nextLine();
                 while (true) {
                     instruction=scan.nextLine();
-                    if (instruction=="buy potion") {
+                    if (instruction=="buy potion" && mainplayer.getInventory().size()<Player.getMaxItemsNumber()) {
                         System.out.println("type potion number: ");
                         int order=scan.nextInt();
-                        mainplayer.setInventory(mainplayer.getInventory().add(drugs.getPotions().get(order)), sys);
+                        List<Items> re= mainplayer.getInventory();
+                        re.add(drugs.getPotions().get(order));
+                        mainplayer.setInventory(re, sys);
                     }
                     else if (instruction=="exit drugs") {
                         System.out.println("Exitting drugstore!!");
@@ -82,8 +89,10 @@ public class Main {
             }
             // attack processing
             if(instruction=="attack"){
-
+                
             }
         }
+        
     }
+    
 }

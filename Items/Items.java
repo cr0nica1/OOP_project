@@ -54,7 +54,9 @@ public abstract class Items {
     public void setRarity(String rarity) {
         this.rarity = rarity;
     }
-
+    public String getType(){
+        return this.type;
+    }
     public abstract String usingItems();
 
     @Override
