@@ -29,7 +29,7 @@ public class gameSystem {
             }
         }
     }
-    public void progressMove(int newX,int newY){
+    public void processMove(int newX,int newY){
         this.savepointx=newX;
         this.savepointy=newY;
         changemap();
