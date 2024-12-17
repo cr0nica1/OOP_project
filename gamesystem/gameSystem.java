@@ -88,7 +88,7 @@ public class gameSystem {
                 player.setInventory(re, this);
                 System.out.println("test");
             }
-            else if (instruction=="exit drugs") {
+            else if (instruction.equals("exit drugs")) {
                 System.out.println("Exitting drugstore!!");
                 break;
             }
