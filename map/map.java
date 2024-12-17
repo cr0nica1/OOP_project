@@ -15,6 +15,7 @@ public class map {
 
     // Constructor mặc định
     public map() {
+
         this(5, 9, 6, 6, 3); // Kích thước mặc định và số lượng quái vật mặc định
     }
 
@@ -103,6 +104,7 @@ public class map {
     public int getGridHeight() {
         return grid[0].length;
     }
+  
 
     // Getter cho số lượng quái vật
     public int getMonstersCount() {
@@ -125,35 +127,39 @@ public class map {
     }
 
     // Phương thức hiển thị thông tin về bản đồ
-    private void displayMapInfo(map gameMap) {
+    public void displayMapInfo() {
+        System.out.println("--------------------------------------------------------------------------");
         System.out.println("Thông tin bản đồ:");
-        System.out.println("Kích thước: " + gameMap.getGridWidth() + "x" + gameMap.getGridHeight());
-        System.out.println("Điểm kết thúc: (" + gameMap.getEndpointX() + ", " + gameMap.getEndpointY() + ")");
-        System.out.println("Số lượng quái vật: " + gameMap.getMonstersCount());
+        System.out.println("Kích thước: " + getGridWidth() + "x" + getGridHeight());
+        System.out.println("Điểm kết thúc: (" + getEndpointX() + ", " + getEndpointY() + ")");
+        System.out.println("Số lượng quái vật: " + getMonstersCount());
 
         // Hiển thị vị trí quái vật
-        for (int i = 0; i < gameMap.getMonstersCount(); i++) {
+        for (int i = 0; i < getMonstersCount(); i++) {
 
         }
 
         // Hiển thị trạng thái của grid
         System.out.println("Trạng thái grid:");
-        for (int i = 0; i < gameMap.getGridHeight(); i++) {
-            for (int j = 0; j < gameMap.getGridWidth(); j++) {
-                System.out.print(gameMap.grid[j][i] + " "); // Hiển thị trạng thái ô
+        for (int i = 0; i < getGridHeight(); i++) {  
+            System.out.print("{");          
+            for (int j = 0; j < getGridWidth(); j++) {
+                System.out.print(grid[j][i] + " "); // Hiển thị trạng thái ô
             }
+            System.out.print("}");
             System.out.println(); // Xuống dòng sau mỗi hàng
         }
 
         // Thông tin về chướng ngại vật
         System.out.println("Thông tin chướng ngại vật: ");
-        for (int i = 0; i < gameMap.getGridHeight(); i++) {
-            for (int j = 0; j < gameMap.getGridWidth(); j++) {
-                if (gameMap.grid[j][i] == 1) {
+        for (int i = 0; i <getGridHeight(); i++) {
+            for (int j = 0; j < getGridWidth(); j++) {
+                if (grid[j][i] == 1) {
                     System.out.println("Chướng ngại vật tại: (" + j + ", " + i + ")");
                 }
             }
         }
+        System.out.println("--------------------------------------------------------------------------");
     }
 
 }

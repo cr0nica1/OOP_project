@@ -39,7 +39,7 @@ public class Main {
             
             String instruction=scanner.nextLine();
             System.out.println(instruction);
-            if (instruction .equals("w") || instruction.equals("a")||instruction.equals("s")||instruction.equals("s")) {
+            if (instruction .equals("w") || instruction.equals("a")||instruction.equals("s")||instruction.equals("d")) {
               
                 mainplayer.move(instruction, sys);
                 continue;
