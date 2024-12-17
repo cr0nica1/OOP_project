@@ -46,7 +46,8 @@ public class Player {
             case "D" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }
-        sys.progressMove(x, y);
+        System.out.println("test");
+        sys.processMove(x, y);
     }
 
     public void attack(Monster monster) {
