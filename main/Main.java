@@ -45,7 +45,7 @@ public class Main {
                 continue;
             }
             if (instruction.equals("marketplace")) {
-                System.out.println(" test");
+           
                 sys.processing_market(market,scanner);
                 break;
                 
