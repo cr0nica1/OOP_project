@@ -12,7 +12,7 @@ public class Monster {
         this.defense = defense;
         this.speed = speed;
     }
-
+    
     // Phương thức di chuyển
     public void move() {
         // Logic di chuyển quái vật
@@ -31,18 +31,6 @@ public class Monster {
         }
     }
 
-    // Phương thức sử dụng kỹ năng
-    public void usingskill(Skills skill) {
-        // Logic sử dụng kỹ năng
-
-        System.out.println("Quái vật sử dụng kỹ năng: " + skill.getSkillName());
-        // Có thể thêm logic để áp dụng hiệu ứng của kỹ năng        
-    }
-    
-    private void displayInfo() {
-    }
-
-    // Getter và Setter nếu cần
     public int getHP() {
         return HP;
     }
