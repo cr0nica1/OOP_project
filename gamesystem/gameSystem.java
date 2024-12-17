@@ -33,6 +33,7 @@ public class gameSystem {
         this.savepointx=newX;
         this.savepointy=newY;
         changemap();
+        currentMap.displayMapInfo();
     }
     public void endgame(){
         System.exit(0);
