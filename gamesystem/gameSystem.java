@@ -38,12 +38,10 @@ public class gameSystem {
         System.exit(0);
     }
     public void changemap(){
-        if (currentMap.checkEndpoint(savepointx, savepointy)==true) {
-            currentMap=currentMap.loadMap();
-            player.setX(0);
-            player.setY(0);
-            this.savepointx=0;
-            this.savepointy=0;
+        if (currentMap.loadMap(player)!=null) {
+            currentMap=currentMap.loadMap(player);
+            this.savepointx=player.getX();
+            this.savepointy=player.getY();                        
         }
     }
     public void processing_market(Marketplace market){
