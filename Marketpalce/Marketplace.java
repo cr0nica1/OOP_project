@@ -19,7 +19,7 @@ public class Marketplace {
         addItem(new Weapon("Banana Scythe",1350,"Hit",75,"B+",2.0,3)); // luoi hai chuoi,vu khi voi tao hinh sieu buon cuoi gay loi cuon
         addItem(new SpecialWeapon("Skyward Atlas",3200,"Hit",400,"S",0.75,5,"Burn"));
         addItem(new Weapon("Bow",600,"Hit",20,"D",1.5,2));
-        addItem(new SpecialWeapon("FlameBlade",2100,""))
+       
     }
 
     private void addItem(Items item) {
