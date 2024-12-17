@@ -1,8 +1,9 @@
-import java.util.List;
+
 import java.util.Scanner;
 
 public class Main {
-
+    Monster monster;
+    
     public static void main (String [] args){
         
         String ins=new String();
@@ -21,6 +22,7 @@ public class Main {
         if (ins=="exit") {
             System.exit(0);
         }
+        scanner.close();
     }
     public static void starting(){
         Player mainplayer=new Player("Player_1");
@@ -33,65 +35,29 @@ public class Main {
         while (status==1) {
             Scanner scan=new Scanner(System.in);
             String instruction=scan.nextLine();
+
             if (instruction =="w" || instruction=="a"||instruction=="s"||instruction=="d") {
                 mainplayer.move(instruction, sys);
                 continue;
             }
             if (instruction=="marketplace") {
-                market.showItems();
-        
-                // buy items processing
-                while (true) {
-                    instruction=scan.nextLine();
-                    if (instruction=="buy weapon") {
-                        System.out.println("type weapon number: ");
-                        int order=scan.nextInt();
-                        List<Items> re= mainplayer.getInventory();
-                        re.add(market.getWeapons().get(order));
-                        mainplayer.setInventory(re, sys);                       
-                    }
-                    else if (instruction=="buy armor") {
-                        System.out.println("type armor number: ");
-                        int order=scan.nextInt();
-                        List<Items> re= mainplayer.getInventory();
-                        re.add(market.getArmors().get(order));
-                        mainplayer.setInventory(re, sys);
-                    }
-                    else if (instruction=="exit market") {
-                        System.out.println("Exitting the Marketplay");
-                        break;
-                    }else{
-                        System.out.println("Invalid Operation!!!");
-                    }
-                }
-
+                sys.processing_market(market);
+                continue;
             }
             //buy potion processing
             if (instruction=="drugs") {
-                drugs.showPotions();
-                instruction=scan.nextLine();
-                while (true) {
-                    instruction=scan.nextLine();
-                    if (instruction=="buy potion" && mainplayer.getInventory().size()<Player.getMaxItemsNumber()) {
-                        System.out.println("type potion number: ");
-                        int order=scan.nextInt();
-                        List<Items> re= mainplayer.getInventory();
-                        re.add(drugs.getPotions().get(order));
-                        mainplayer.setInventory(re, sys);
-                    }
-                    else if (instruction=="exit drugs") {
-                        System.out.println("Exitting drugstore!!");
-                        break;
-                    }else{
-                        System.out.println("Invalid Operation!!!");
-                    }
-                }
+                sys.processing_drug(drugs);
+                continue;
             }
             // attack processing
             if(instruction=="attack"){
                 
             }
-            
+
+            if(instruction=="end"){
+                break;
+            }
+            scan.close();
         }
         
     }

@@ -40,10 +40,10 @@ public class Player {
     // Methods
     public void move(String direction, gameSystem sys) {
         switch (direction.toUpperCase()) {
-            case "w" -> y += speed;
-            case "a" -> x -= speed;
-            case "s" -> y -= speed;
-            case "d" -> x += speed;
+            case "W" -> y += speed;
+            case "A" -> x -= speed;
+            case "S" -> y -= speed;
+            case "D" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }
         sys.progressMove(x, y);
@@ -66,15 +66,10 @@ public class Player {
             System.out.println("Inventory is full! Cannot pick up " + item.getName());
         }
     }
-
-    public void wearingItem(Items item) {
-        System.out.println(name + " equipped " + item.getName());
-        // Implement item effect logic
-    }
-
     public void usingDrug(Potion potion) { // Assuming Drug is another class
         for(int i=0;i<this.inventory.size();i++){
-            if (this.inventory.get(i).getType()=="Drug") {
+            if (this.inventory.get(i)==potion) {
+
                 Potion drug=(Potion) this.inventory.get(i);
                 for (int j=0;j<drug.getDuration();j++){
                     this.setHP(this.getHP()+drug.getAttributePoints());
