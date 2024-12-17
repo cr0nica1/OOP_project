@@ -10,21 +10,22 @@ public class Main {
         int status=0;
         Scanner scanner=new Scanner(System.in);
         status=scanner.nextInt();
+        scanner.nextLine();
         if (status==0) {
             ins="exit";
         }else{
             ins="start";
         }
-
+       
         if (ins=="start") {
-            starting();
+            starting(scanner);
         }
         if (ins=="exit") {
             System.exit(0);
         }
         scanner.close();
     }
-    public static void starting(){
+    public static void starting(Scanner scanner){
         Player mainplayer=new Player("Player_1");
         map default_map= new map();
         gameSystem sys=new gameSystem(default_map, mainplayer, 0, 0);
@@ -33,20 +34,25 @@ public class Main {
         mainplayer.setInventory(mainplayer.getInventory() , sys);
         int status=1;
         while (status==1) {
-            Scanner scan=new Scanner(System.in);
-            String instruction=scan.nextLine();
-
-            if (instruction =="w" || instruction=="a"||instruction=="s"||instruction=="d") {
+            System.out.println("nhap instruction");
+            
+            
+            String instruction=scanner.nextLine();
+            System.out.println(instruction);
+            if (instruction .equals("w") || instruction.equals("a")||instruction.equals("s")||instruction.equals("s")) {
+                System.out.println("test");
                 mainplayer.move(instruction, sys);
                 continue;
             }
-            if (instruction=="marketplace") {
-                sys.processing_market(market);
-                continue;
+            if (instruction.equals("marketplace")) {
+                System.out.println(" test");
+                sys.processing_market(market,scanner);
+                break;
+                
             }
             //buy potion processing
-            if (instruction=="drugs") {
-                sys.processing_drug(drugs);
+            if (instruction.equals("drugs")) {
+                sys.processing_drug(drugs,scanner);
                 continue;
             }
             // attack processing
@@ -57,7 +63,7 @@ public class Main {
             if(instruction=="end"){
                 break;
             }
-            scan.close();
+          
         }
         
     }

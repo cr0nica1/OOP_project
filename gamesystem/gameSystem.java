@@ -18,7 +18,7 @@ public class gameSystem {
     }
 
     public void updateAbility(){
-        for(int i=0;i<=4;i++){
+        for(int i=0;i<player.getInventory().size();i++){
             Items items=player.getInventory().get(i);
             String fetch=items.getType();
             if (fetch=="Weapon") {
@@ -44,54 +44,55 @@ public class gameSystem {
             this.savepointy=player.getY();                        
         }
     }
-    public void processing_market(Marketplace market){
+    public void processing_market(Marketplace market,Scanner scan){
+        System.out.println("in thu");
         market.showItems();
         while (true) {
-                    Scanner scan=new Scanner(System.in);
+
+                    
                     String instruction=scan.nextLine();
-                    if (instruction=="buy weapon"&&player.getInventory().size()<Player.getMaxItemsNumber()) {
+                   
+                    if (instruction.equals("buy weapon")&&player.getInventory().size()<Player.getMaxItemsNumber()) {
                         System.out.println("type weapon number: ");
                         int order=scan.nextInt();
                         List<Items> re= player.getInventory();
                         re.add(market.getWeapons().get(order));
-                        player.setInventory(re, this);                       
+                        player.setInventory(re, this);    
+                                   
                     }
-                    else if (instruction=="buy armor" && player.getInventory().size()<Player.getMaxItemsNumber()) {
+                    else if (instruction.equals("buy armor") && player.getInventory().size()<Player.getMaxItemsNumber()) {
                         System.out.println("type armor number: ");
                         int order=scan.nextInt();
                         List<Items> re= player.getInventory();
                         re.add(market.getArmors().get(order));
                         player.setInventory(re, this);
                     }
-                    else if (instruction=="exit market") {
+                    else if (instruction.equals("exit market")) {
                         System.out.println("Exitting the Marketplay");
                         break;
-                    }else{
-                        System.out.println("Invalid Operation!!!");
                     }
-                    scan.close();
+                    
                 }
                 
     }
-    public void processing_drug(Drugs drugs){
+    public void processing_drug(Drugs drugs,Scanner scan){
         drugs.showPotions();
         while (true) {
-            Scanner scan= new Scanner(System.in);
+            
             String instruction=scan.nextLine();
-            if (instruction=="buy potion" && player.getInventory().size()<Player.getMaxItemsNumber()) {
+            if (instruction.equals("buy potion") && player.getInventory().size()<Player.getMaxItemsNumber()) {
                 System.out.println("type potion number: ");
                 int order=scan.nextInt();
                 List<Items> re= player.getInventory();
                 re.add(drugs.getPotions().get(order));
                 player.setInventory(re, this);
+                System.out.println("test");
             }
             else if (instruction=="exit drugs") {
                 System.out.println("Exitting drugstore!!");
                 break;
-            }else{
-                System.out.println("Invalid Operation!!!");
             }
-            scan.close();
+            
         }
     }
 }
