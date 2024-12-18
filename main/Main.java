@@ -47,7 +47,7 @@ public class Main {
             if (instruction.equals("marketplace")) {
            
                 sys.processing_market(market,scanner);
-                break;
+                continue;
                 
             }
             //buy potion processing
@@ -58,6 +58,9 @@ public class Main {
             // attack processing
             if(instruction.equals("attack")){
                 sys.process_attack();
+            }
+            if (instruction.equals("usingskill")) {
+                
             }
 
             if(instruction.equals("end")){

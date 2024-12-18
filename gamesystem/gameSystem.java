@@ -124,18 +124,29 @@ public class gameSystem {
             int [] current =q.poll();
             int row=current[0];
             int col=current[1];
-            if (currentMap.getGrid()[row][col]==5) {
+            
+            if (row<(currentMap.getGridHeight())&&col<(currentMap.getGridWidth())&&row<currentMap.getGridWidth()&&col<currentMap.getGridHeight()) {
+                
+            
+                if (currentMap.getGrid()[row][col]==5) {
                 return target(currentMap.getMonsters(),row,col);
+                }
             }
+            System.out.println("Duyệt ô: (" + row + ", " + col + ")");
             for(int i =0;i<4;i++){
                 int newRow=row+dRow[i];
                 int newCol=col+dCol[i];
+                if (newCol>=0 &&newRow>=0&&newCol<currentMap.getGridWidth()&&newRow<currentMap.getGridHeight()) {
+                    
                 
                 if (visited[newRow][newCol]==false&&row>=0&&row<currentMap.getGridHeight()&&col<currentMap.getGridWidth()&&col>=0) {
                     q.add(new int[]{newRow,newCol});
+                    visited[newRow][newCol]=true;
 
                 }
             }
+            }
+
             
        }
        return null;

@@ -119,7 +119,6 @@ public class Monster {
     public void setY(int y) {
         this.y = y;
     }
-
     public int getDirectionX() {
         return directionX;
     }
