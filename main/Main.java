@@ -30,6 +30,7 @@ public class Main {
         map default_map= new map();
         gameSystem sys=new gameSystem(default_map, mainplayer, 0, 0);
         Marketplace market=new Marketplace();
+        AncientTemple temple=new AncientTemple();
         Drugs drugs=new Drugs();
         mainplayer.setInventory(mainplayer.getInventory() , sys);
         int status=1;
@@ -62,6 +63,9 @@ public class Main {
                     status=0;
                     break;
                 case "usingskill":
+                    break;
+                case "temple":
+                    sys.process_learn_skill(temple,scanner);
                     break;
                 case "player status":
                     break;

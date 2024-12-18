@@ -1,9 +1,11 @@
-import java.util.Arrays;
+import java.util.ArrayList;
+
+import java.util.List;
 
 public class map {
     private String name;
     private int[][] grid; // Ma trận grid
-    private Monster[] monsters; // Mảng quái vật
+    private List<Monster> monsters; // Mảng quái vật
     private int endpointX; // Tọa độ x của điểm kết thúc
     private int endpointY; // Tọa độ y của điểm kết thúc
     private map nextMap;
@@ -25,14 +27,38 @@ public class map {
     // Constructor với tham số
     public map(int rows, int cols, int endpointX, int endpointY, int monsterCount) {
         this.grid = new int[rows][cols];
-        this.monsters = new Monster[monsterCount];
+        this.monsters = new ArrayList<>();
         this.endpointX = endpointX;
         this.endpointY = endpointY;
 
 
     }
     // Khởi tạo grid với dữ liệu cụ thể
+    public void remove_monster(){
+        int x;
+        int y;
+        String name; int HP;int attackPoint;int defense; float speed;
+        for(Monster monster:monsters){
+            if (monster.die()) {
+                x=monster.getInitX();
+                y=monster.getInitY();
+                name=monster.getName();
+                HP=monster.getHP();
+                attackPoint=monster.getAttackPoint();
+                defense=monster.getDefense();
+                speed=monster.getSpeed();
+                monster=null;
 
+                // bộ đếm thời gian
+
+                respawn(name, HP, attackPoint, defense, speed, x, y);
+            }
+        }
+    }
+    public void respawn( String name, int HP,int attackPoint,int defense, float speed ,int x, int y){
+        Monster monster=new Monster(name,HP,attackPoint,defense,speed ,x,y);
+        monsters.add(monster);
+    }
     public void updatePlayerPosition(int oldX, int oldY, int newX, int newY) {
         grid[oldX][oldY] = 0; // Clear old position
         grid[newX][newY] = 3; // Set new position
@@ -106,10 +132,10 @@ public class map {
 
     // Getter cho số lượng quái vật
     public int getMonstersCount() {
-        return this.monsters.length;
+        return this.monsters.size();
     }
 
-    public Monster[] getMonsters() {
+    public List<Monster> getMonsters() {
         return monsters;
     }
 

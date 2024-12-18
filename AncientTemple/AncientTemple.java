@@ -32,4 +32,11 @@ public class AncientTemple {
     public List<Skills> getSkillsList() {
         return skillsList;
     }
-
+    public void showSkill(){
+        System.out.println("Skill:");
+        for(Skills skill: skillsList){
+            System.out.println(skill);
+        }
+        
+    }
+}
