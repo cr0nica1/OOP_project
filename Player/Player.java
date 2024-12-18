@@ -16,6 +16,7 @@ public class Player {
     private int gold;
     private int x;
     private int y;
+    private float range;
 
     // Static attribute
     private static int max_items_number = 16; // Maximum items in inventory
@@ -36,6 +37,7 @@ public class Player {
         this.availableSkill= new ArrayList<>();
         this.x = 0;
         this.y = 0;
+        this.range = 1.0f;
     }
 
     public Player(String name) {
@@ -54,6 +56,15 @@ public class Player {
         System.out.println("test");
         sys.processMove(x, y);
     }
+    
+    public boolean checking_inventory(Items items){
+        for( Items item:inventory){
+            if (items.getType()==item.getType()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public void attack(Monster monster) {
         int damage=attackPoint-monster.getDefense();
@@ -66,12 +77,23 @@ public class Player {
 
     public void pickupItem(Items item) {
         if (inventory.size() < max_items_number) {
+            if (checking_inventory(item)) {
             inventory.add(item);
             System.out.println(name + " picked up " + item.getName());
+            }
+            if (!checking_inventory(item)) {
+                System.out.println(item.getType()+"is equipped");
+            }
         } else {
             System.out.println("Inventory is full! Cannot pick up " + item.getName());
         }
     }
+    public void dropItem(Items item){
+        if (inventory.size()>0) {
+            inventory.remove(item);
+            System.out.println(name+ " drop "+ item.getName());
+        }
+    }   
     public void usingDrug(Potion potion) { // Assuming Drug is another class
         for(int i=0;i<this.inventory.size();i++){
             if (this.inventory.get(i)==potion) {
@@ -218,4 +240,19 @@ public class Player {
     public static void setMaxItemsNumber(int maxItemsNumber) {
         max_items_number = maxItemsNumber;
     }
+    
+    public static int getMaxSkillsNumber() {
+        return max_skills_number;
+    }
+
+    public static void setMaxSkillsNumber(int maxSkillsNumber) {
+        max_skills_number = maxSkillsNumber;
+    }
+    public float getRange(){
+        return range;
+    }
+    public void setRange(float range){
+        this.range=range;
+    }
 }
+
