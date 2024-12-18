@@ -2,10 +2,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AncientTemple {
-    private final List<Skills> skillList;
+    private final List<Skills> skillsList;
 
     public AncientTemple(){
-        skillList = new ArrayList<>();
+        skillsList = new ArrayList<>();
         addSkills();
     }
     private void addSkills() {
