@@ -40,9 +40,9 @@ public class Player {
     // Methods
     public void move(String direction, gameSystem sys) {
         switch (direction.toUpperCase()) {
-            case "W" -> y += speed;
+            case "W" -> y -= speed;
             case "A" -> x -= speed;
-            case "S" -> y -= speed;
+            case "S" -> y += speed;
             case "D" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }

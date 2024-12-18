@@ -98,6 +98,13 @@ public class gameSystem {
             
         }
     }
+    public void process_attack(){
+        Monster monster=scan_monster();
+        if (monster!=null) {
+            player.attack(monster);
+            System.out.println(monster.toString());
+        }
+    }
     public Monster target(Monster[] monster,int x, int y){
         for(int i=0;i<monster.length;i++){
             if (x==monster[i].getX()&&y==monster[i].getY()) {
@@ -110,25 +117,36 @@ public class gameSystem {
        int[] dRow = {-1, 1, 0, 0};
        int[] dCol = {0, 0, -1, 1};
        Queue<int []> q= new LinkedList<>();
-       boolean[][] visited=new boolean[currentMap.getGridHeight()][currentMap.getGridWidth()];
+       boolean[][] visited=new boolean[currentMap.getGridWidth()][currentMap.getGridHeight()];
        q.add(new int[]{player.getX(), player.getY()});
        visited[player.getX()][player.getY()]=true;
        while (!q.isEmpty()) {
             int [] current =q.poll();
             int row=current[0];
             int col=current[1];
-            if (currentMap.getGrid()[row][col]==5) {
+            
+            if (row<(currentMap.getGridHeight())&&col<(currentMap.getGridWidth())&&row<currentMap.getGridWidth()&&col<currentMap.getGridHeight()) {
+                
+            
+                if (currentMap.getGrid()[col][row]==5) {
                 return target(currentMap.getMonsters(),row,col);
+                }
             }
+            
             for(int i =0;i<4;i++){
                 int newRow=row+dRow[i];
                 int newCol=col+dCol[i];
+                if (newCol>=0 &&newRow>=0&&newCol<currentMap.getGridWidth()&&newRow<currentMap.getGridHeight()) {
+                    
                 
-                if (visited[newRow][newCol]==false&&row>=0&&row<currentMap.getGridHeight()&&col<currentMap.getGridWidth()&&col>=0) {
-                    q.add(new int[]{newRow,newCol});
+                if (visited[newCol][newRow]==false&&row>=0&&row<currentMap.getGridHeight()&&col<currentMap.getGridWidth()&&col>=0) {
+                    q.add(new int[]{newCol,newRow});
+                    visited[newCol][newRow]=true;
 
                 }
             }
+            }
+
             
        }
        return null;
