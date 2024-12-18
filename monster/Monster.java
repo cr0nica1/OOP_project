@@ -65,9 +65,9 @@ public class Monster {
             respawn(); // Hồi sinh sau khi chết
         }
     }
-
-    private void displayInfo() {
-        System.out.println("Tên: " + name + ", HP: " + HP + ", Tấn công: " + attackPoint +
+    @Override
+    public String toString() {
+        return ("Tên: " + name + ", HP: " + HP + ", Tấn công: " + attackPoint +
                 ", Phòng thủ: " + defense + ", Tốc độ: " + speed + ", Tọa độ: (" + x + ", " + y + ")");
     }
 
@@ -134,5 +134,8 @@ public class Monster {
 
     public void setDirectionY(int directionY) {
         this.directionY = directionY;
+    }
+    public String getName(){
+        return name;
     }
 }

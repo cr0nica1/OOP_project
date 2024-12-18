@@ -1,4 +1,6 @@
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class gameSystem {
@@ -95,5 +97,40 @@ public class gameSystem {
             }
             
         }
+    }
+    public Monster target(Monster[] monster,int x, int y){
+        for(int i=0;i<monster.length;i++){
+            if (x==monster[i].getX()&&y==monster[i].getY()) {
+                return monster[i];
+            }
+        }
+        return null;
+    }
+    public Monster scan_monster(){
+       int[] dRow = {-1, 1, 0, 0};
+       int[] dCol = {0, 0, -1, 1};
+       Queue<int []> q= new LinkedList<>();
+       boolean[][] visited=new boolean[currentMap.getGridHeight()][currentMap.getGridWidth()];
+       q.add(new int[]{player.getX(), player.getY()});
+       visited[player.getX()][player.getY()]=true;
+       while (!q.isEmpty()) {
+            int [] current =q.poll();
+            int row=current[0];
+            int col=current[1];
+            if (currentMap.getGrid()[row][col]==5) {
+                return target(currentMap.getMonsters(),row,col);
+            }
+            for(int i =0;i<4;i++){
+                int newRow=row+dRow[i];
+                int newCol=col+dCol[i];
+                
+                if (visited[newRow][newCol]==false&&row>=0&&row<currentMap.getGridHeight()&&col<currentMap.getGridWidth()&&col>=0) {
+                    q.add(new int[]{newRow,newCol});
+
+                }
+            }
+            
+       }
+       return null;
     }
 }

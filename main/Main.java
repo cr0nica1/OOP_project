@@ -56,11 +56,11 @@ public class Main {
                 continue;
             }
             // attack processing
-            if(instruction=="attack"){
+            if(instruction.equals("attack")){
                 
             }
 
-            if(instruction=="end"){
+            if(instruction.equals("end")){
                 break;
             }
           

@@ -17,6 +17,9 @@ public class map {
     public map() {
 
         this(5, 9, 6, 6, 3); // Kích thước mặc định và số lượng quái vật mặc định
+        // grid=[[    ]   
+        //        [    ]    ]
+        // monster[]=[   ,      ,        ,      ]
     }
 
     // Constructor với tham số
@@ -97,6 +100,9 @@ public class map {
     
     }
 // Getter cho kích thước grid
+    public int [][] getGrid(){
+        return grid;
+    }
     public int getGridWidth() {
         return grid.length;
     }
