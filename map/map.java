@@ -33,6 +33,11 @@ public class map {
     }
     // Khởi tạo grid với dữ liệu cụ thể
 
+    public void updatePlayerPosition(int oldX, int oldY, int newX, int newY) {
+        grid[oldX][oldY] = 0; // Clear old position
+        grid[newX][newY] = 3; // Set new position
+        displayGrid(); // Display the updated grid
+    }
     // Phương thức thiết lập bản đồ trước đó
     public void setPreviousMap(map previousMap) {
         this.previousMap = previousMap;

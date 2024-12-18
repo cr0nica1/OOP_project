@@ -33,11 +33,11 @@ public class gameSystem {
             }
         }
     }
-    public void processMove(int newX,int newY){
+    public void processMove(int newX,int newY,int oldX, int oldY){
         this.savepointx=newX;
         this.savepointy=newY;
         changemap();
-        currentMap.displayGrid();
+        currentMap.updatePlayerPosition(oldX, oldY, newX, newY);
     }
     public void endgame(){
         System.exit(0);
