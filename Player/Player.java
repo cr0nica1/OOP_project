@@ -37,7 +37,9 @@ public class Player {
         this.availableSkill= new ArrayList<>();
         this.x = 0;
         this.y = 0;
+
         this.range = 1.0f;
+
     }
 
     public Player(String name) {
@@ -46,15 +48,18 @@ public class Player {
 
     // Methods
     public void move(String direction, gameSystem sys) {
+        int oldx=this.x;
+        int oldy=this.y;
         switch (direction.toUpperCase()) {
-            case "W" -> y -= speed;
-            case "A" -> x -= speed;
-            case "S" -> y += speed;
-            case "D" -> x += speed;
+            case "A" -> y -= speed;
+            case "W" -> x -= speed;
+            case "D" -> y += speed;
+            case "S" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }
         System.out.println("test");
-        sys.processMove(x, y);
+
+        sys.processMove(x, y,oldx,oldy);
     }
     
     public boolean checking_inventory(Items items){
@@ -74,7 +79,14 @@ public class Player {
         }
         
     }
-
+    public boolean checking_inventory( Items items){
+        for( Items m:inventory){
+            if (items.getType()==m.getType()) {
+                return false;
+            }
+        }
+        return true;
+    }
     public void pickupItem(Items item) {
         if (inventory.size() < max_items_number) {
             if (checking_inventory(item)) {
@@ -121,6 +133,12 @@ public class Player {
     }
 
     // Getters and setters
+    public float getRange(){
+        return range;
+    }
+    public void setRange(float range){
+        this.range=range;
+    }
     public String getName() {
         return name;
     }

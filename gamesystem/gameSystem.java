@@ -24,18 +24,29 @@ public class gameSystem {
             Items items=player.getInventory().get(i);
             String fetch=items.getType();
             if (fetch=="Weapon") {
-                player.setAttackPoint(player.getAttackPoint()+items.getAttributePoints());;
+                Weapon weapon= (Weapon) items;
+                player.setAttackPoint(player.getAttackPoint()+items.getAttributePoints());
+                player.setRange(player.getRange()+weapon.getRange());
             }
             if (fetch=="Armor") {
-                player.setDefensePoint(player.getDefensePoint()+items.getAttributePoints());;
+                player.setDefensePoint(player.getDefensePoint()+items.getAttributePoints());
             }
         }
     }
-    public void processMove(int newX,int newY){
+    public void processMove(int newX,int newY,int oldX, int oldY){
+        if (newX<currentMap.getGridWidth()&&newX>=0&&newY<currentMap.getGridHeight()&&newY>=0) {
+            
+        
         this.savepointx=newX;
         this.savepointy=newY;
         changemap();
-        currentMap.displayGrid();
+        currentMap.updatePlayerPosition(oldX, oldY, newX, newY);
+        }
+        else{
+            player.setX(oldX);
+            player.setY(oldY);
+            currentMap.displayGrid();
+        }
     }
     public void endgame(){
         System.exit(0);
@@ -47,8 +58,19 @@ public class gameSystem {
             this.savepointy=player.getY();                        
         }
     }
+    public void process_drop(Scanner scan){
+        System.out.println("Type drop item:");
+        String instruction =scan.nextLine();
+        for(Items items:player.getInventory()){
+            if (instruction.equals(items.getName())) {
+                player.dropItem(items);
+                return;
+            }
+        }
+        System.out.println("Invalid item name!");
+    }
     public void processing_market(Marketplace market,Scanner scan){
-        System.out.println("in thu");
+     
         market.showItems();
         while (true) {
 
@@ -59,21 +81,38 @@ public class gameSystem {
                         System.out.println("type weapon number: ");
                         int order=scan.nextInt();
                         List<Items> re= player.getInventory();
-                        re.add(market.getWeapons().get(order));
-                        player.setInventory(re, this);    
+                        if (player.checking_inventory(market.getWeapons().get(order))) {
+                            
+                            re.add(market.getWeapons().get(order));
+                            player.setInventory(re, this); 
+                            System.out.println("Buying "+market.getWeapons().get(order).getName()+" success!");
+                        }
+                        else{
+                            System.out.println(market.getWeapons().get(order).getType()+" is equipped!");
+                        }
+                        continue; 
                                    
                     }
-                    else if (instruction.equals("buy armor") && player.getInventory().size()<Player.getMaxItemsNumber()) {
+                     if (instruction.equals("buy armor") && player.getInventory().size()<Player.getMaxItemsNumber()) {
                         System.out.println("type armor number: ");
                         int order=scan.nextInt();
                         List<Items> re= player.getInventory();
+                        if (player.checking_inventory(market.getArmors().get(order))) {
+                            
+                        
                         re.add(market.getArmors().get(order));
                         player.setInventory(re, this);
+                        System.out.println("Buying "+market.getArmors().get(order).getName()+" success|");
+                    }   else{
+                        System.out.println(market.getArmors().get(order).getType()+ " is equipped!");
                     }
-                    else if (instruction.equals("exit market")) {
+                        continue;
+                    }
+                    if (instruction.equals("exit market")) {
                         System.out.println("Exitting the Marketplay");
                         break;
                     }
+                    System.out.println("Invalid action!!");
                     
                 }
                 
@@ -90,11 +129,13 @@ public class gameSystem {
                 re.add(drugs.getPotions().get(order));
                 player.setInventory(re, this);
                 System.out.println("test");
+                continue;
             }
-            else if (instruction.equals("exit drugs")) {
+             if (instruction.equals("exit drugs")) {
                 System.out.println("Exitting drugstore!!");
                 break;
             }
+            System.out.println("Invalid action!!");
             
         }
     }
@@ -125,6 +166,9 @@ public class gameSystem {
             int [] current =q.poll();
             int row=current[0];
             int col=current[1];
+            if (col>(player.getX()+player.getRange())||row>(player.getY()+player.getRange())) {
+                return null;
+            }
             
             if (row<(currentMap.getGridHeight())&&col<(currentMap.getGridWidth())&&row<currentMap.getGridWidth()&&col<currentMap.getGridHeight()) {
                 
