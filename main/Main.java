@@ -38,37 +38,43 @@ public class Main {
             
             
             String instruction=scanner.nextLine();
-            System.out.println(instruction);
+            
+            
             if (instruction .equals("w") || instruction.equals("a")||instruction.equals("s")||instruction.equals("d")) {
               
                 mainplayer.move(instruction, sys);
                 continue;
             }
-            if (instruction.equals("marketplace")) {
-           
-                sys.processing_market(market,scanner);
-                continue;
-                
+            switch (instruction) {
+                case "marketplace":
+                    sys.processing_market(market,scanner);
+                    break;
+                case "drugs":
+                    sys.processing_drug(drugs,scanner);
+                    break;
+                case "drop item":
+                    sys.process_drop(scanner);
+                    break;
+                case "attack":
+                    sys.process_attack();
+                    break;
+                case "end":
+                    status=0;
+                    break;
+                case "usingskill":
+                    break;
+                case "player status":
+                    break;
+                default:
+                    System.out.println("Invalid instruction!!");
             }
-            //buy potion processing
-            if (instruction.equals("drugs")) {
-                sys.processing_drug(drugs,scanner);
-                continue;
-            }
-            // attack processing
-            if(instruction.equals("attack")){
-                sys.process_attack();
-            }
-            if (instruction.equals("usingskill")) {
-                
-            }
-
-            if(instruction.equals("end")){
-                break;
-            }
-            if(instruction.equals("usingskill")){
-                
-            }
+            
+            
+            
+            
+            
+            
+            
           
         }
         
