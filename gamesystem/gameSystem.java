@@ -35,7 +35,7 @@ public class gameSystem {
         this.savepointx=newX;
         this.savepointy=newY;
         changemap();
-        currentMap.displayMapInfo();
+        currentMap.displayGrid();
     }
     public void endgame(){
         System.exit(0);
@@ -103,6 +103,7 @@ public class gameSystem {
         if (monster!=null) {
             player.attack(monster);
             System.out.println(monster.toString());
+            currentMap.displayGrid();
         }
     }
     public Monster target(Monster[] monster,int x, int y){

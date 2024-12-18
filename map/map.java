@@ -32,20 +32,7 @@ public class map {
 
     }
     // Khởi tạo grid với dữ liệu cụ thể
-    private void initializeGrid() {
-        for (int i = 0; i < grid.length; i++) {
-            Arrays.fill(grid[i], 0); // 0 có thể đại diện cho ô trống
-        }
-        // Đặt chướng ngại vật
 
-
-        // Đặt vị trí người chơi
-        //grid[playerX][playerY] = 3; // 3 đại diện cho người chơi
-
-        // Đặt vị trí quái vật
-
-        // Các quái vật khác có thể được thêm vào tại các tọa độ khác vào từng map rồi viết rõ
-    }
     // Phương thức thiết lập bản đồ trước đó
     public void setPreviousMap(map previousMap) {
         this.previousMap = previousMap;
@@ -135,10 +122,10 @@ public class map {
     // Phương thức hiển thị thông tin về bản đồ
     public void displayMapInfo() {
         System.out.println("--------------------------------------------------------------------------");
-        System.out.println("Thông tin bản đồ:");
-        System.out.println("Kích thước: " + getGridWidth() + "x" + getGridHeight());
-        System.out.println("Điểm kết thúc: (" + getEndpointX() + ", " + getEndpointY() + ")");
-        System.out.println("Số lượng quái vật: " + getMonstersCount());
+        System.out.println("Map Information:");
+        System.out.println("Size: " + getGridWidth() + "x" + getGridHeight());
+        System.out.println("Endpoint: (" + getEndpointX() + ", " + getEndpointY() + ")");
+        System.out.println("Number of Monsters: " + getMonstersCount());
 
         // Hiển thị vị trí quái vật
         for (int i = 0; i < getMonstersCount(); i++) {
@@ -146,26 +133,28 @@ public class map {
         }
 
         // Hiển thị trạng thái của grid
-        System.out.println("Trạng thái grid:");
-        for (int i = 0; i < getGridHeight(); i++) {  
-            System.out.print("{");          
+        System.out.println("Grid Status:");
+        for (int i = 0; i < getGridHeight(); i++) {
+            System.out.print("{ ");
             for (int j = 0; j < getGridWidth(); j++) {
-                System.out.print(grid[j][i] + " "); // Hiển thị trạng thái ô
+                System.out.print(grid[j][i] + " ");
             }
-            System.out.print("}");
-            System.out.println(); // Xuống dòng sau mỗi hàng
+            System.out.println("}");
         }
 
-        // Thông tin về chướng ngại vật
-        System.out.println("Thông tin chướng ngại vật: ");
-        for (int i = 0; i <getGridHeight(); i++) {
-            for (int j = 0; j < getGridWidth(); j++) {
-                if (grid[j][i] == 1) {
-                    System.out.println("Chướng ngại vật tại: (" + j + ", " + i + ")");
-                }
-            }
-        }
+        
         System.out.println("--------------------------------------------------------------------------");
+    }
+    public void displayGrid() {
+        System.out.println("Current Grid State:");
+        for (int i = 0; i < grid.length; i++) {
+            System.out.print("{ ");
+            for (int j = 0; j < grid[i].length; j++) {
+                System.out.print(grid[i][j] + " ");
+            }
+            System.out.println("}");
+        }
+        System.out.println("--------------------------------");
     }
 
 }
