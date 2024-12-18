@@ -62,14 +62,7 @@ public class Player {
         sys.processMove(x, y,oldx,oldy);
     }
     
-    public boolean checking_inventory(Items items){
-        for( Items item:inventory){
-            if (items.getType()==item.getType()) {
-                return false;
-            }
-        }
-        return true;
-    }
+
 
     public void attack(Monster monster) {
         int damage=attackPoint-monster.getDefense();
@@ -266,11 +259,6 @@ public class Player {
     public static void setMaxSkillsNumber(int maxSkillsNumber) {
         max_skills_number = maxSkillsNumber;
     }
-    public float getRange(){
-        return range;
-    }
-    public void setRange(float range){
-        this.range=range;
-    }
+
 }
 
