@@ -34,10 +34,19 @@ public class gameSystem {
         }
     }
     public void processMove(int newX,int newY,int oldX, int oldY){
+        if (newX<currentMap.getGridWidth()&&newX>=0&&newY<currentMap.getGridHeight()&&newY>=0) {
+            
+        
         this.savepointx=newX;
         this.savepointy=newY;
         changemap();
         currentMap.updatePlayerPosition(oldX, oldY, newX, newY);
+        }
+        else{
+            player.setX(oldX);
+            player.setY(oldY);
+            currentMap.displayGrid();
+        }
     }
     public void endgame(){
         System.exit(0);
