@@ -19,7 +19,12 @@ public class Skills {
         this.skillDuration = skillDuration;
         this.price = price;
     }
-    
+    @Override
+        public String toString(){
+            return "SKill{name='" + skillName + "', MPcost='" + MPcost + "', price=" + price +
+                ", effect='" + skillEffect + "', range=" + skillRange +
+                ", duration='" + skillDuration + "'}";
+        }
 
         // Getters and Setters
     public String getSkillName() {
@@ -95,13 +100,14 @@ public class Skills {
         int damage=this.skillPower - Target.getDefense();
         if (damage>0) {
             Target.setHP(Target.getHP()-damage);
-            System.out.println("Player " + player.name + "dealt "+ damage + " dameges!");
+            System.out.println("Player " + player.getName() + "dealt "+ damage + " dameges!");
         }
         
         System.out.println("Casting " + skillName + " on " + Target.getName() + "! Dealt " + damage + " damage.\n");
 
         // Apply reduced damage to other monsters within skillZone
         
+    return null;
     }
 }
    

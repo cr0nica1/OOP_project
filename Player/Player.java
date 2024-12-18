@@ -43,7 +43,7 @@ public class Player {
     }
 
     public Player(String name) {
-        this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10);
+        this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10000);
     }
 
     // Methods
@@ -57,8 +57,6 @@ public class Player {
             case "S" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }
-        System.out.println("test");
-
         sys.processMove(x, y,oldx,oldy);
     }
     
@@ -75,6 +73,14 @@ public class Player {
     public boolean checking_inventory( Items items){
         for( Items m:inventory){
             if (items.getType()==m.getType()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean cheking_skill(Skills skill){
+        for( Skills m:availableSkill){
+            if (skill.getSkillName()==m.getSkillName()) {
                 return false;
             }
         }
