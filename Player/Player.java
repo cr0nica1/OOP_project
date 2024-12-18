@@ -40,15 +40,18 @@ public class Player {
 
     // Methods
     public void move(String direction, gameSystem sys) {
+        int oldx=this.x;
+        int oldy=this.y;
         switch (direction.toUpperCase()) {
-            case "W" -> y -= speed;
-            case "A" -> x -= speed;
-            case "S" -> y += speed;
-            case "D" -> x += speed;
+            case "A" -> y -= speed;
+            case "W" -> x -= speed;
+            case "D" -> y += speed;
+            case "S" -> x += speed;
             default -> System.out.println("Invalid direction!");
         }
         System.out.println("test");
-        sys.processMove(x, y);
+
+        sys.processMove(x, y,oldx,oldy);
     }
 
     public void attack(Monster monster) {
