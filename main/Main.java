@@ -57,11 +57,14 @@ public class Main {
             }
             // attack processing
             if(instruction.equals("attack")){
-                
+                sys.process_attack();
             }
 
             if(instruction.equals("end")){
                 break;
+            }
+            if(instruction.equals("usingskill")){
+                
             }
           
         }

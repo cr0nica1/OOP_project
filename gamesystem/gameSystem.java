@@ -98,6 +98,13 @@ public class gameSystem {
             
         }
     }
+    public void process_attack(){
+        Monster monster=scan_monster();
+        if (monster!=null) {
+            player.attack(monster);
+            System.out.println(monster.toString());
+        }
+    }
     public Monster target(Monster[] monster,int x, int y){
         for(int i=0;i<monster.length;i++){
             if (x==monster[i].getX()&&y==monster[i].getY()) {
