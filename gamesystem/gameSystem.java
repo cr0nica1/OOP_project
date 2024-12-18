@@ -132,7 +132,7 @@ public class gameSystem {
                 return target(currentMap.getMonsters(),row,col);
                 }
             }
-            System.out.println("Duyệt ô: (" + row + ", " + col + ")");
+            
             for(int i =0;i<4;i++){
                 int newRow=row+dRow[i];
                 int newCol=col+dCol[i];
