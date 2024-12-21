@@ -2,16 +2,16 @@
 public static void main(String[] args) {
     // Tạo một ma trận lưới 5x5 với các vị trí tường (1), ô trống (0), điểm kết thúc (9), vị trí quái vật (5) và vị trí người chơi (3)
     int[][] grid = {
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 5, 0, 0, 0, 0, 0, 1},
-            {1, 3, 5, 0, 0, 0, 0, 5, 0, 1},
-            {1, 0, 0, 5, 0, 0, 0, 0, 9, 1},
-            {1, 0, 5, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 5, 0, 0, 0, 0, 5, 0, 0, 1},
-            {1, 0, 0, 5, 0, 5, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 5, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
+            {0, 3, 5, 0, 0, 1, 0, 5, 0, 0},
+            {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
+            {0, 0, 5, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0, 1, 0, 0, 0, 0},
+            {0, 5, 0, 0, 0, 0, 5, 0, 0, 0},
+            {0, 0, 1, 5, 0, 5, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0, 0, 5, 0, 0, 0},
+            {0, 0, 1, 0, 0, 5, 0, 0, 0, 0}
     };
 // 3 là người chơi 5 là quái vật
 
@@ -24,7 +24,7 @@ public static void main(String[] args) {
         int x, y;
         int directionX, directionY;
 
-        public Creature(String name, int hp, int attack, int defense, float speed, int x, int y, int directionX, int directionY) {
+        public Creature(String name, int hp, int attack, int defense, float speed, int directionX, int directionY) {
             this.name = name;
             this.hp = hp;
             this.attack = attack;
@@ -49,19 +49,19 @@ public static void main(String[] args) {
 
     class Dragon extends Creature {
         public Dragon() {
-            super("Dragon", 100, 25, 10, 1.5f, 3, 1, 1, 0);
+            super("Dragon", 100, 25, 10, 1.5f, 3, 1);
         }
     }
 
     class Goblin extends Creature {
         public Goblin() {
-            super("Goblin", 200, 40, 5, 2.0f, 1, 3, 0, -1);
+            super("Goblin", 200, 40, 5, 2.0f, 1, 3);
         }
     }
 
     class Troll extends Creature {
         public Troll() {
-            super("Troll", 400, 50, 15, 0.5f, 2, 2, -1, 0);
+            super("Troll", 400, 50, 15, 0.5f, 2, 2);
         }
     }
 
