@@ -45,8 +45,24 @@ public class Player {
     public Player(String name) {
         this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10000);
     }
+    public class Monster {
+        private String name;
+        private int health;
+        private attackPower;
+        
+        public Monster(String name, int health, int attackPower) {
+            this.name = name;
+            this.health = health;
+            this.attackPower = attackPower;
+        }
+    }
 
     // Methods
+
+    @Override
+    public String toString(){
+        return "Monster{name'" + name + "', health = " + health + ", attackPower=" + attackPower + "}"
+    }
     public void move(String direction, gameSystem sys) {
         int oldx=this.x;
         int oldy=this.y;
@@ -151,14 +167,19 @@ public class Player {
 
         for (Monster monster : monsters)    {
             if (monster != target && distanceTo(monster) <= skill.getSkillZone()) {
-                int reduceDamge = (int)(skill.getSkillPower() * 0.5);
-                monster.takeDamage(reduceDamge);
-                System.out.println("Dealt " + reduceDamge + " damage to " + monster.getName() + " within the skill zone. \n");
-            }
-        }
-        return "Skill cast successfully!";
-    }
-    // Getters and setters
+                            int reduceDamge = (int)(skill.getSkillPower() * 0.5);
+                            monster.takeDamage(reduceDamge);
+                            System.out.println("Dealt " + reduceDamge + " damage to " + monster.getName() + " within the skill zone. \n");
+                        }
+                    }
+                    return "Skill cast successfully!";
+                }
+                private int distanceTo(Monster monster) {
+                    // TODO Auto-generated method stub
+                    throw new UnsupportedOperationException("Unimplemented method 'distanceTo'");
+                }
+            
+                // Getters and setters
     public float getRange(){
         return range;
     }

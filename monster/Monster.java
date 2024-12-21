@@ -114,4 +114,9 @@ public class Monster {
     public String getName(){
         return name;
     }
+
+    public void takeDamage(int skillPower) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'takeDamage'");
+    }
 }
