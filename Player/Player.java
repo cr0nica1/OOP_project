@@ -45,23 +45,11 @@ public class Player {
     public Player(String name) {
         this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10000);
     }
-    public class Monster {
-        private String name;
-        private int health;
-        private attackPower;
-        
-        public Monster(String name, int health, int attackPower) {
-            this.name = name;
-            this.health = health;
-            this.attackPower = attackPower;
-        }
-    }
-
     // Methods
 
     @Override
     public String toString(){
-        return "Monster{name'" + name + "', health = " + health + ", attackPower=" + attackPower + "}"
+        return "Player{name='" + name + "', currentMapName='" + currentMapName + "', HP=" + HP + ", MP=" + MP + ", attackPoint=" + attackPoint + ", defensePoint=" + defensePoint + ", speed=" + speed + ", level=" + level + ", gold=" + gold + ", x=" + x + ", y=" + y + ", range=" + range + "}";
     }
     public void move(String direction, gameSystem sys) {
         int oldx=this.x;
