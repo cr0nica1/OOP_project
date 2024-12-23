@@ -1,0 +1,2 @@
+-tính ra x, y đúng mẹ theo biểu diễn hàng cột rồi
+-tùy xem muốn đổi sang row, col cho đỡ nhầm không thôi
