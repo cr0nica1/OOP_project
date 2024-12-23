@@ -133,7 +133,7 @@ public class Player {
 
     public String castSkill(Skills skill, List<Monster> monsters) {
         if (this.MP < skill.getMPcost()){
-            return "Het tien!";
+            return "Out of money!";
         }
         this.MP -= skill.getMPcost();
 
