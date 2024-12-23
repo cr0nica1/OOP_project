@@ -63,6 +63,7 @@ public class Main {
                     status=0;
                     break;
                 case "usingskill":
+                    sys.process_use_skill(scanner);
                     break;
                 case "temple":
                     sys.process_learn_skill(temple,scanner);

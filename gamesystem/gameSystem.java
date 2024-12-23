@@ -44,6 +44,11 @@ public class gameSystem {
             changemap();
             currentMap.updatePlayerPosition(oldX, oldY, newX, newY);
             }
+            else{
+                player.setX(oldX);
+                player.setY(oldY);
+                currentMap.displayGrid();
+            }
         }
         else{
             player.setX(oldX);
@@ -192,7 +197,8 @@ public class gameSystem {
         }
     }
     public void process_attack(){
-        Monster monster=scan_monster();
+        Monster monster=scan_monster(player.getRange());
+        System.out.println();
         if (monster!=null) {
             player.attack(monster);
             System.out.println(monster.toString());
@@ -202,6 +208,33 @@ public class gameSystem {
         }
 
     }
+    public void process_use_potion(){
+        for(Items items:player.getInventory()){
+            if (items.getType()=="Potion") {
+                player.usePotion((Potion) items);
+                player.dropItem(items);
+            }
+        }
+    }
+    public void process_use_skill(Scanner scan){
+        player.showSkill();
+        System.out.println("Choose skill to use: ");
+        String instruction=scan.nextLine();
+        for(Skills skill:player.getAvailableSkill()){
+
+            if (instruction.equals(skill.getSkillName())) {
+                Monster monster=scan_monster(skill.getSkillRange());
+                if (monster!=null) {
+                    player.castSkill(skill, monster);
+                    return;
+                    
+                }
+                else{
+                    System.out.println("Target out of range!");
+                }
+            }
+        }
+    }
     public Monster target(List<Monster> monster,int x, int y){
         for(int i=0;i<monster.size();i++){
             if (x==monster.get(i).getX()&&y==monster.get(i).getY()) {
@@ -210,25 +243,25 @@ public class gameSystem {
         }
         return null;
     }
-    public Monster scan_monster(){
+    public Monster scan_monster( float range){
        int[] dRow = {-1, 1, 0, 0};
        int[] dCol = {0, 0, -1, 1};
        Queue<int []> q= new LinkedList<>();
-       boolean[][] visited=new boolean[currentMap.getGridWidth()][currentMap.getGridHeight()];
+       boolean[][] visited=new boolean[currentMap.getGridHeight()][currentMap.getGridWidth()];
        q.add(new int[]{player.getX(), player.getY()});
        visited[player.getX()][player.getY()]=true;
        while (!q.isEmpty()) {
             int [] current =q.poll();
             int row=current[0];
             int col=current[1];
-            if (col>(player.getX()+player.getRange())||row>(player.getY()+player.getRange())) {
+            if (row>(player.getX()+range)||col>(player.getY()+range)) {
                 return null;
             }
             
             if (row<(currentMap.getGridHeight())&&col<(currentMap.getGridWidth())&&row<currentMap.getGridWidth()&&col<currentMap.getGridHeight()) {
                 
             
-                if (currentMap.getGrid()[col][row]==5) {
+                if (currentMap.getGrid()[row][col]==5) {
                 return target(currentMap.getMonsters(),row,col);
                 }
             }
@@ -239,9 +272,9 @@ public class gameSystem {
                 if (newCol>=0 &&newRow>=0&&newCol<currentMap.getGridWidth()&&newRow<currentMap.getGridHeight()) {
                     
                 
-                if (visited[newCol][newRow]==false&&row>=0&&row<currentMap.getGridHeight()&&col<currentMap.getGridWidth()&&col>=0) {
-                    q.add(new int[]{newCol,newRow});
-                    visited[newCol][newRow]=true;
+                if (visited[newRow][newCol]==false&&row>=0&&row<currentMap.getGridHeight()&&col<currentMap.getGridWidth()&&col>=0) {
+                    q.add(new int[]{newRow,newCol});
+                    visited[newRow][newCol]=true;
 
                 }
             }

@@ -105,7 +105,7 @@ public class Player {
             System.out.println(name+ " drop "+ item.getName());
         }
     }   
-    public void usingDrug(Potion potion) { // Assuming Drug is another class
+    public void usePotion(Potion potion) { // Assuming Drug is another class
         for(int i=0;i<this.inventory.size();i++){
             if (this.inventory.get(i)==potion) {
 
@@ -127,8 +127,20 @@ public class Player {
      
     }
 
-    public void castSkill(Skills skill) {
+    public void castSkill(Skills skill, Monster monster) {
         // Implement skill logic
+        if (MP < skill.getMPcost()) {
+            System.out.println("Not enough MP to cast this skill.");
+            return;
+        }
+        MP -= skill.getMPcost();
+        int damage = skill.getSkillPower() - monster.getDefense();
+        if (damage > 0) {
+            monster.setHP(monster.getHP() - damage);
+            System.out.println(name + " used " + skill.getSkillName() + " and dealt " + damage + " damage to " + monster.getName());
+        } else {
+            System.out.println(name + " used " + skill.getSkillName() + " but dealt no damage to " + monster.getName());
+        }
     }
 
     // Getters and setters
@@ -208,6 +220,11 @@ public class Player {
             this.availableSkill = availableSkill;
         } else {
             System.out.println("Skill list exceeds maximum allowed size of " + max_skills_number + ".");
+        }
+    }
+    public void showSkill(){
+        for(Skills skill:availableSkill){
+            System.out.println(skill.getSkillName());
         }
     }
     public int getLevel() {

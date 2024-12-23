@@ -18,10 +18,30 @@ public class map {
     // Constructor mặc định
     public map() {
 
-        this(5, 9, 6, 6, 3); // Kích thước mặc định và số lượng quái vật mặc định
-        // grid=[[    ]   
-        //        [    ]    ]
-        // monster[]=[   ,      ,        ,      ]
+    this.grid = new int[][] {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
+        {0, 0, 5, 0, 0, 1, 0, 5, 0, 0},
+        {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
+        {0, 0, 5, 0, 0, 1, 0, 0, 0, 0},
+        {0, 0, 1, 1, 5, 1, 0, 1, 0, 0},
+        {0, 5, 0, 0, 0, 0, 5, 1, 0, 0},
+        {0, 0, 1, 5, 0, 5, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0, 0, 5, 0, 0, 0},
+        {0, 0, 1, 0, 0, 5, 0, 0, 0, 0}
+    };
+    this.endpointX=grid.length;
+    this.endpointY=grid[0].length;
+    this.monsters = new ArrayList<>();
+
+    for (int i = 0; i < grid.length; i++) {
+        for (int j = 0; j < grid[i].length; j++) {
+            if (grid[i][j] == 5) {
+                monsters.add(new Monster("Monster", 100, 10, 5, 1.0f, i, j));
+            }
+        }
+    }
+  
     }
 
     // Constructor với tham số
@@ -40,8 +60,6 @@ public class map {
         String name; int HP;int attackPoint;int defense; float speed;
         for(Monster monster:monsters){
             if (monster.die()) {
-                x=monster.getInitX();
-                y=monster.getInitY();
                 name=monster.getName();
                 HP=monster.getHP();
                 attackPoint=monster.getAttackPoint();
@@ -51,7 +69,7 @@ public class map {
 
                 // bộ đếm thời gian
 
-                respawn(name, HP, attackPoint, defense, speed, x, y);
+                
             }
         }
     }
