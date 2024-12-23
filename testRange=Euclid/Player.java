@@ -67,7 +67,7 @@ public class Player {
 
 
     public void attack(Monster monster) {
-        double distance = Math.sqrt(Math.pow(monster.getX() - this.x, 2) + Math.pow(monster.getY() - this.y, 2));
+        double distance = distanceTo(monster); // Sử dụng distanceTo
         if (distance <= this.range) {
             int damage = attackPoint - monster.getDefense();
             if (damage > 0) {
@@ -77,9 +77,10 @@ public class Player {
                 System.out.println("Tấn công không có hiệu lực");
             }
         } else {
-            System.out.println("Monster ở ngòai tầm tấn công");
+            System.out.println("Monster ở ngoài tầm tấn công");
         }
     }
+    
     
     public boolean checking_inventory( Items items){
         for( Items m:inventory){
@@ -139,40 +140,43 @@ public class Player {
     }
 
     public String castSkill(Skills skill, List<Monster> monsters) {
-        if (this.MP < skill.getMPcost()){
-            return "Het tien!";
+        if (this.MP < skill.getMPcost()) {
+            return "Không đủ mana!";
         }
         this.MP -= skill.getMPcost();
-
+    
         Monster target = null;
         double maxHP = 0;
-
-        for(Monster monster : monsters){
-            if (distanceTo(monster) <= skill.getSkillRange() && monster.getHP() > maxHP){
+    
+        for (Monster monster : monsters) {
+            if (distanceTo(monster) <= skill.getSkillRange() && monster.getHP() > maxHP) {
                 target = monster;
                 maxHP = monster.getHP();
             }
         }
-        if (target == null){
-            return "No monster within range to cast skills.";
+    
+        if (target == null) {
+            return "Không có quái vật trong phạm vi để sử dụng kỹ năng.";
         }
-
+    
         target.takeDamage(skill.getSkillPower());
-        System.out.println("Casting " + skill.getSkillName() + " on " + target.getName() + "! Dealt " + skill.getSkillPower() + " damage.\n");
-
-        for (Monster monster : monsters)    {
+        System.out.println("Sử dụng " + skill.getSkillName() + " lên " + target.getName() + "! Gây " + skill.getSkillPower() + " sát thương.");
+    
+        for (Monster monster : monsters) {
             if (monster != target && distanceTo(monster) <= skill.getSkillZone()) {
-                            int reduceDamge = (int)(skill.getSkillPower() * 0.5);
-                            monster.takeDamage(reduceDamge);
-                            System.out.println("Dealt " + reduceDamge + " damage to " + monster.getName() + " within the skill zone. \n");
-                        }
-                    }
-                    return "Skill cast successfully!";
-                }
-                private int distanceTo(Monster monster) {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'distanceTo'");
-                }
+                int reduceDamage = (int) (skill.getSkillPower() * 0.5);
+                monster.takeDamage(reduceDamage);
+                System.out.println("Gây " + reduceDamage + " sát thương cho " + monster.getName() + " trong vùng ảnh hưởng.");
+            }
+        }
+    
+        return "Kỹ năng đã được sử dụng thành công!";
+    }
+    
+    private double distanceTo(Monster monster) {
+        return Math.sqrt(Math.pow(monster.getX() - this.x, 2) + Math.pow(monster.getY() - this.y, 2));
+    }
+    
             
                 // Getters and setters
     public float getRange(){
