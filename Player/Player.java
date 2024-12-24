@@ -144,6 +144,7 @@ public class Player {
                 Potion drug=(Potion) this.inventory.get(i);
                 for (int j=0;j<drug.getDuration();j++){
                     if (this.getHP()>=this.getMaxHP()) {
+                        this.setHP(this.getMaxHP());
                         return;
                     }
                     this.setHP(this.getHP()+drug.getAttributePoints());
