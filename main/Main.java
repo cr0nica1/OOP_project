@@ -69,6 +69,10 @@ public class Main {
                     sys.process_learn_skill(temple,scanner);
                     break;
                 case "player status":
+                    mainplayer.printStatus();
+                    break;
+                case "using potion":
+                    sys.process_use_potion(scanner);
                     break;
                 default:
                     System.out.println("Invalid instruction!!");

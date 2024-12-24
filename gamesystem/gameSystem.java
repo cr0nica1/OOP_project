@@ -20,16 +20,25 @@ public class gameSystem {
     }
 
     public void updateAbility(){
+        if (player.getInventory().size()==0) {
+            player.setAttackPoint(player.getOriginalAttackPoint());
+            player.setDefensePoint(player.getOriginalDefensePoint());
+            player.setRange(player.getOriginalrange());
+            return;
+            
+        }
         for(int i=0;i<player.getInventory().size();i++){
             Items items=player.getInventory().get(i);
             String fetch=items.getType();
             if (fetch=="Weapon") {
+                System.out.println("Weapon");
                 Weapon weapon= (Weapon) items;
-                player.setAttackPoint(player.getAttackPoint()+items.getAttributePoints());
-                player.setRange(player.getRange()+weapon.getRange());
+        
+                player.setAttackPoint(player.getOriginalAttackPoint()+items.getAttributePoints());
+                player.setRange(player.getOriginalrange()+weapon.getRange());
             }
             if (fetch=="Armor") {
-                player.setDefensePoint(player.getDefensePoint()+items.getAttributePoints());
+                player.setDefensePoint(player.getOriginalDefensePoint()+items.getAttributePoints());
             }
         }
     }
@@ -71,7 +80,8 @@ public class gameSystem {
         String instruction =scan.nextLine();
         for(Items items:player.getInventory()){
             if (instruction.equals(items.getName())) {
-                player.dropItem(items);
+                player.dropItem(items, this);
+                updateAbility();
                 return;
             }
         }
@@ -122,6 +132,7 @@ public class gameSystem {
                                     player.setGold(player.getGold()-market.getWeapons().get(order).getPrice());
                                     re.add(market.getWeapons().get(order));
                                     player.setInventory(re, this); 
+                                    
                                     System.out.println("Buying "+market.getWeapons().get(order).getName()+" success!");
                                 continue;
                             }
@@ -148,6 +159,7 @@ public class gameSystem {
                         
                                     re.add(market.getArmors().get(order));
                                     player.setInventory(re, this);
+                                
                                     System.out.println("Buying "+market.getArmors().get(order).getName()+" success|");
                                 }else{
                                     System.out.println("Not enough money!");
@@ -208,13 +220,17 @@ public class gameSystem {
         }
 
     }
-    public void process_use_potion(){
-        for(Items items:player.getInventory()){
-            if (items.getType()=="Potion") {
-                player.usePotion((Potion) items);
-                player.dropItem(items);
+    public void process_use_potion(Scanner scan){
+        player.showPotion();
+        System.out.println("Choose potion to use: ");
+        String instruction=scan.nextLine();
+        for(Items potion:player.getInventory()){
+            if (instruction.equals(potion.getName())) {
+                player.usePotion((Potion) potion);
+                return;
             }
         }
+        System.out.println("Invalid potion name!");
     }
     public void process_use_skill(Scanner scan){
         player.showSkill();
@@ -283,5 +299,5 @@ public class gameSystem {
             
        }
        return null;
-    }
+    } 
 }

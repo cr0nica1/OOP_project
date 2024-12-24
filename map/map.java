@@ -45,12 +45,12 @@ public class map {
     }
 
     // Constructor với tham số
-    public map(int rows, int cols, int endpointX, int endpointY, int monsterCount) {
-        this.grid = new int[rows][cols];
+    public map(int[][] grid, int endpointX, int endpointY) {
+        this.grid = grid;
         this.monsters = new ArrayList<>();
         this.endpointX = endpointX;
         this.endpointY = endpointY;
-
+        
 
     }
     // Khởi tạo grid với dữ liệu cụ thể
@@ -86,7 +86,9 @@ public class map {
     public void setPreviousMap(map previousMap) {
         this.previousMap = previousMap;
     }
-
+    public void setNextMap(map nextMap) {
+        this.nextMap = nextMap;
+    }
     // Phương thức quay lại bản đồ trước đó
     // Phương thức load map
     public map loadMap(Player player) {
@@ -167,6 +169,7 @@ public class map {
     public String getName(){
         return name;
     }
+
 
     // Phương thức hiển thị thông tin về bản đồ
     public void displayMapInfo() {

@@ -7,6 +7,11 @@ public class Player {
     private String currentMapName;
     private int HP;
     private int MP;
+    private int maxHP;
+    private int maxMP;
+    private int originalAttackPoint;
+    private int originalDefensePoint;
+    private float originalrange;
     private int attackPoint;
     private int defensePoint;
     private float speed;
@@ -26,8 +31,12 @@ public class Player {
     public Player(String name, String currentMapName, int HP, int MP, int attackPoint, int defensePoint, float speed, int level, int gold) {
         this.name = name;
         this.currentMapName = currentMapName;
+        this.maxHP = HP;
+        this.maxMP = MP;
         this.HP = HP;
         this.MP = MP;
+        this.originalAttackPoint = attackPoint;
+        this.originalDefensePoint = defensePoint;
         this.attackPoint = attackPoint;
         this.defensePoint = defensePoint;
         this.speed = speed;
@@ -39,6 +48,7 @@ public class Player {
         this.y = 0;
 
         this.range = 1.0f;
+        this.originalrange = 1.0f;
 
     }
 
@@ -70,6 +80,19 @@ public class Player {
         }
         
     }
+    public void printStatus() {
+     
+        System.out.println("Name: " + name);
+        System.out.println("HP: " + HP);
+        System.out.println("MP: " + MP);
+        System.out.println("Attack Point: " + attackPoint);
+        System.out.println("Defense Point: " + defensePoint);
+        System.out.println("Speed: " + speed);
+        System.out.println("Level: " + level);
+        System.out.println("Gold: " + gold);
+        System.out.println("Current Map: " + currentMapName);
+        System.out.println("Position: (" + x + ", " + y + ")");
+    }
     public boolean checking_inventory( Items items){
         for( Items m:inventory){
             if (items.getType()==m.getType()) {
@@ -99,18 +122,30 @@ public class Player {
             System.out.println("Inventory is full! Cannot pick up " + item.getName());
         }
     }
-    public void dropItem(Items item){
+    public void dropItem(Items item, gameSystem sys) {
         if (inventory.size()>0) {
             inventory.remove(item);
             System.out.println(name+ " drop "+ item.getName());
+        }else{
+            System.out.println("Inventory is empty!");
         }
     }   
+    public void showPotion(){
+        for(Items item:inventory){
+            if (item.getType().equals("Potion")) {
+                System.out.println(item.getName());
+            }
+        }
+    }
     public void usePotion(Potion potion) { // Assuming Drug is another class
         for(int i=0;i<this.inventory.size();i++){
             if (this.inventory.get(i)==potion) {
 
                 Potion drug=(Potion) this.inventory.get(i);
                 for (int j=0;j<drug.getDuration();j++){
+                    if (this.getHP()>=this.getMaxHP()) {
+                        return;
+                    }
                     this.setHP(this.getHP()+drug.getAttributePoints());
                     try{
                         Thread.sleep(1000);
@@ -144,6 +179,36 @@ public class Player {
     }
 
     // Getters and setters
+    public float getOriginalrange() {
+        return originalrange;
+    }
+    public void setOriginalrange(float originalrange) {
+        this.originalrange = originalrange;
+    }
+    public int getOriginalAttackPoint() {
+        return originalAttackPoint;
+    }
+    public void setOriginalAttackPoint(int originalAttackPoint) {
+        this.originalAttackPoint = originalAttackPoint;
+    }
+    public int getOriginalDefensePoint() {
+        return originalDefensePoint;
+    }
+    public void setOriginalDefensePoint(int originalDefensePoint) {
+        this.originalDefensePoint = originalDefensePoint;
+    }
+    public int getMaxHP() {
+        return maxHP;
+    }
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
+    public int getMaxMP() {
+        return maxMP;
+    }
+    public void setMaxMP(int maxMP) {
+        this.maxMP = maxMP;
+    }
     public float getRange(){
         return range;
     }
