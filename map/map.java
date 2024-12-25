@@ -92,12 +92,21 @@ public class map {
     // Phương thức quay lại bản đồ trước đó
     // Phương thức load map
     public map loadMap(Player player) {
-        if (check_previousMap(player)==true) {
-            player.setX(previousMap.endpointX-1);
-            player.setY(previousMap.endpointY-1);
+        
+        if (checkEndpoint(player)==true) {
+            player.setX(0);
+            player.setY(0);
+            return nextMap;
+        }
+        if (checkpreviousMap(player)==true) {
+            player.setX(previousMap.getGridHeight()-2);
+            player.setY(previousMap.getGridWidth()-2);
             return previousMap;
             
         }
+        return null;
+        
+    }
         if (checkEndpoint(player)==true) {
             player.setX(0);
             player.setY(0);
@@ -107,17 +116,21 @@ public class map {
         
     }
 
-    public boolean check_previousMap(Player player){
-        if ((player.getX() == 0 && player.getY() == -1) || (player.getX() == -1 && player.getY() == 0)) {
-            if (previousMap != null) {
-                System.out.println("Quay lại bản đồ trước đó...");
-                return true; // Trả về bản đồ trước đó
-            } else {
-                System.out.println("Không có bản đồ trước đó để quay lại.");
+    public boolean checkpreviousMap(Player player) {
+        if (grid[player.getX()][player.getY()]==7){
+                if (previousMap!=null) {
+                    
+                    
+                
+                System.out.println("Loading previous map"+previousMap.getName());
+                return true;
+                }
+            else{
+                System.out.println("No previous map");
                 return false;
             }
         }
-        return false;
+            return false;
     }
 
 
