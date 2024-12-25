@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -18,62 +19,62 @@ public class map {
     // Constructor mặc định
     public map(int[][] grid,int endpointX,int endpointY) {
 
-    int[][] grid1=
-            {
-        {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
-        {0, 0, 5, 0, 0, 1, 0, 5, 0, 0},
-        {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
-        {0, 0, 5, 0, 0, 1, 0, 0, 0, 0},
-        {0, 0, 1, 1, 5, 1, 0, 1, 0, 0},
-        {0, 5, 0, 0, 0, 0, 5, 1, 0, 0},
-        {0, 0, 1, 5, 0, 5, 0, 1, 0, 0},
-        {0, 0, 1, 0, 0, 0, 5, 0, 0, 0},
-        {0, 0, 1, 0, 0, 5, 0, 0, 0, 0}
-    };
-    map Map1=new map(grid1,10,10);
-    int[][] grid2={
-            {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-            {0, 0, 0, 5, 0, 1, 0, 0, 1, 0},
-            {0, 3, 5, 0, 0, 1, 0, 5, 1, 0},
-            {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
-            {5, 0, 5, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 1, 0, 0, 1, 0, 0, 0, 0},
-            {0, 5, 0, 0, 0, 0, 5, 0, 1, 0},
-            {5, 0, 1, 5, 0, 5, 0, 0, 1, 0},
-            {0, 0, 1, 0, 0, 0, 5, 0, 1, 0},
-            {0, 0, 1, 0, 0, 5, 0, 5, 0, 0}
-    };
-    map Map2=new map(grid2,10,10);
-    int[][] grid3={
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-            {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
-            {0, 0, 1, 0, 5, 1, 0, 0, 9, 0},
-            {0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
-            {1, 0, 0, 0, 0, 5, 0, 1, 0, 0},
-            {0, 0, 1, 0, 1, 0, 0, 0, 5, 0},
-            {0, 0, 0, 1, 0, 0, 0, 1, 0, 0},
-            {0, 1, 0, 5, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 0, 0, 0, 0, 9}
-    };
-    map Map3=new map(grid3,10,10);
-    Map1.setNextMap(Map2);
-    Map2.setPreviousMap(Map1);
-    Map2.setNextMap(Map3);
-    Map3.setPreviousMap(Map2);
-    this.endpointX=grid.length;
-    this.endpointY=grid[0].length;
-    this.monsters = new ArrayList<>();
+        int[][] grid1=
+                {
+                        {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                        {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
+                        {0, 0, 5, 0, 0, 1, 0, 5, 0, 0},
+                        {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
+                        {0, 0, 5, 0, 0, 1, 0, 0, 0, 0},
+                        {0, 0, 1, 1, 5, 1, 0, 1, 0, 0},
+                        {0, 5, 0, 0, 0, 0, 5, 1, 0, 0},
+                        {0, 0, 1, 5, 0, 5, 0, 1, 0, 0},
+                        {0, 0, 1, 0, 0, 0, 5, 0, 0, 0},
+                        {0, 0, 1, 0, 0, 5, 0, 0, 0, 0}
+                };
+        map Map1=new map(grid1,10,10);
+        int[][] grid2={
+                {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                {0, 0, 0, 5, 0, 1, 0, 0, 1, 0},
+                {0, 3, 5, 0, 0, 1, 0, 5, 1, 0},
+                {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
+                {5, 0, 5, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 1, 0, 0, 1, 0, 0, 0, 0},
+                {0, 5, 0, 0, 0, 0, 5, 0, 1, 0},
+                {5, 0, 1, 5, 0, 5, 0, 0, 1, 0},
+                {0, 0, 1, 0, 0, 0, 5, 0, 1, 0},
+                {0, 0, 1, 0, 0, 5, 0, 5, 0, 0}
+        };
+        map Map2=new map(grid2,10,10);
+        int[][] grid3={
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
+                {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
+                {0, 0, 1, 0, 5, 1, 0, 0, 9, 0},
+                {0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+                {1, 0, 0, 0, 0, 5, 0, 1, 0, 0},
+                {0, 0, 1, 0, 1, 0, 0, 0, 5, 0},
+                {0, 0, 0, 1, 0, 0, 0, 1, 0, 0},
+                {0, 1, 0, 5, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 9}
+        };
+        map Map3=new map(grid3,10,10);
+        Map1.setNextMap(Map2);
+        Map2.setPreviousMap(Map1);
+        Map2.setNextMap(Map3);
+        Map3.setPreviousMap(Map2);
+        this.endpointX=grid.length;
+        this.endpointY=grid[0].length;
+        this.monsters = new ArrayList<>();
 
 
-    for (int i = 0; i < grid.length; i++) {
-        for (int j = 0; j < grid[i].length; j++) {
-            if (grid[i][j] == 5) {
-                monsters.add(new Monster("Monster", 100, 10, 5, 1.0f, i, j));
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == 5) {
+                    monsters.add(new Monster("Monster", 100, 10, 5, 1.0f, i, j));
+                }
             }
         }
-    }
         displayGrid();
     }
 
@@ -118,29 +119,33 @@ public class map {
     // Phương thức quay lại bản đồ trước đó
     // Phương thức load map
     public map loadMap(Player player) {
-        if (check_previousMap(player)==true) {
-            player.setX(previousMap.endpointX-1);
-            player.setY(previousMap.endpointY-1);
-            return previousMap;
-            
-        }
+
         if (checkEndpoint(player)==true) {
             player.setX(0);
             player.setY(0);
             return nextMap;
         }
+        if (checkpreviousMap(player)==true) {
+            player.setX(previousMap.getGridHeight()-2);
+            player.setY(previousMap.getGridWidth()-2);
+            return previousMap;
+
+        }
         return null;
-        
+
     }
 
-    public boolean check_previousMap(Player player){
-        if ((player.getX() == 0 && player.getY() == -1) || (player.getX() == -1 && player.getY() == 0)) {
-            if (previousMap != null) {
-                System.out.println("\n" +
-                        "Return to the previous map...");
-                return true; // Trả về bản đồ trước đó
-            } else {
-                System.out.println("There is no previous map to return ");
+    public boolean checkpreviousMap(Player player) {
+        if (grid[player.getX()][player.getY()]==7){
+            if (previousMap!=null) {
+
+
+
+                System.out.println("Loading previous map"+previousMap.getName());
+                return true;
+            }
+            else{
+                System.out.println("No previous map");
                 return false;
             }
         }
@@ -159,7 +164,7 @@ public class map {
     }
 
 
-// Phương thức kiểm tra điểm kết thúc
+    // Phương thức kiểm tra điểm kết thúc
     public boolean checkEndpoint(Player player) {
         if (player.getX()==endpointX&&player.getY()==endpointY) {
             if (nextMap!=null) {
@@ -174,9 +179,9 @@ public class map {
         }
         return false;
 
-    
+
     }
-// Getter cho kích thước grid
+    // Getter cho kích thước grid
     public int [][] getGrid(){
         return grid;
     }
@@ -187,7 +192,7 @@ public class map {
     public int getGridHeight() {
         return grid[0].length;
     }
-  
+
 
     // Getter cho số lượng quái vật
     public int getMonstersCount() {
@@ -232,7 +237,7 @@ public class map {
             System.out.println("}");
         }
 
-        
+
         System.out.println("--------------------------------------------------------------------------");
     }
     public void displayGrid() {
