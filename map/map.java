@@ -10,13 +10,18 @@ public class map {
     private int endpointX; // Tọa độ x của điểm kết thúc
     private int endpointY; // Tọa độ y của điểm kết thúc
     private map nextMap;
+
     private map previousMap; // Bản đồ trước đó
+
+
     // Hằng số cho giá trị quái vật
     //private static final int MONSTER_VALUE = 5; // Giá trị đại diện cho quái vật
     //private static final int PLAYER_VALUE = 3; // Giá trị đại diện cho người chơi
     //private static final int OBSTACLE_VALUE = 1; // Giá trị đại diện cho chướng ngại vật
-    private int monsterCount;
-    // Constructor mặc định
+    // Constructor với tham số
+// Constructor với tham số int[][]
+
+
     public map(int[][] grid,int endpointX,int endpointY) {
 
         int[][] grid1=

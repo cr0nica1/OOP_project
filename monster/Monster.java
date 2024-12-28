@@ -17,7 +17,8 @@ public class Monster {
     private float speed; // Tốc độ di chuyển
     private int x, y; // Tọa độ
     private int initHP;
-    
+
+
 
     // Constructor
     public Monster(String name, int HP, int attackPoint, int defense, float speed, int x, int y) {
@@ -34,95 +35,140 @@ public class Monster {
 
     // Phương thức di chuyển
     public void move() {
-        // Cập nhật tọa độ dựa trên tốc độ và hướng di chuyển
 
         // In ra thông tin di chuyển và tọa độ mới của quái vật
-        System.out.println(name + " đang di chuyển với tốc độ: " + speed + ", tọa độ mới: (" + x + ", " + y + ")");
+        System.out.println(name + " moving at speed: " + speed + ", new coordinate: (" + x + ", " + y + ")");
     }
-    private List<int[]> tracePath(Map<String,String> parentMap, int endX, int endY){
-        return null;
+    public List<int[]> tracePath(Map<String, String> parentMap, int endX, int endY) {
+        List<int[]> path = new LinkedList<>();
+        String node = endX + "," + endY;
+        while (node != null) {
+            String[] parts = node.split(",");
+            path.add(0, new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])});
+            node = parentMap.get(node);
+        }
+        return path;
     }
-    public List<int[]> findpath(map m, Player player){
+
+
+    public List<int[]> findPath(map m, int targetX, int targetY) {
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
-        int rows=m.getGrid().length;
-        int cols=m.getGrid()[0].length;
-        int [][] dist=new int[cols][rows];
-        for(int [] row:dist){
+        int rows = m.getGrid().length;
+        int cols = m.getGrid()[0].length;
+        int[][] dist = new int[rows][cols];
+        for (int[] row : dist) {
             Arrays.fill(row, Integer.MAX_VALUE);
         }
-        Map<String,String> parentMap=new HashMap<>();
-        Queue<int[]> q=new LinkedList<>();
-        q.offer(new int[]{x,y,0});
-        dist[x][y]=0;
-        parentMap.put(x+ ","+y, null);
+        Map<String, String> parentMap = new HashMap<>();
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{x, y, 0});
+        dist[x][y] = 0;
+        parentMap.put(x + "," + y, null);
         while (!q.isEmpty()) {
-            int [] current=q.poll();
-            int cur_x=current[0];
-            int cur_y=current[1];
-            if (m.getGrid()[cur_x][cur_y]==3) {
-                return tracePath(parentMap,cur_x,cur_y);
+            int[] current = q.poll();
+            int cur_x = current[0];
+            int cur_y = current[1];
+            if (cur_x == targetX && cur_y == targetY) {
+                return tracePath(parentMap, cur_x, cur_y);
             }
-            for(int i=0;i<4;i++){
-                int newX=cur_x+dx[i];
-                int newY=cur_y+dy[i];
-                // Add your logic here for processing newX and newY
+            for (int i = 0; i < 4; i++) {
+                int newX = cur_x + dx[i];
+                int newY = cur_y + dy[i];
+                if (newX >= 0 && newY >= 0 && newX < rows && newY < cols && m.getGrid()[newX][newY] != 1) {
+                    int newDist = dist[cur_x][cur_y] + 1;
+                    if (newDist < dist[newX][newY]) {
+                        dist[newX][newY] = newDist;
+                        q.offer(new int[]{newX, newY});
+                        parentMap.put(newX + "," + newY, cur_x + "," + cur_y);
+                    }
+                }
+
             }
         }
         return null;
     }
-    public void scan(map Map,Player player){
-        if (takedamage()==true) {
-            int [] dRow={-1,1,0,0};
-            int [] dCol={0,0,-1,1};
-            Queue<int[]>q=new LinkedList<>();
-            boolean[][] visited= new boolean[Map.getGridWidth()][Map.getGridHeight()];
-            q.add(new int[]{x,y});
-            visited[x][y]=true;
-            while (!q.isEmpty()) {
-                int []current=q.poll();
-                int row=current[0];
-                int col=current[1];
-                
-                if (row<(Map.getGridHeight())&&col<(Map.getGridWidth())&&row<Map.getGridWidth()&&col<Map.getGridHeight()) {
-                    if (Map.getGrid()[col][row]==3) {
-                        int [] delta={1,-1};
-                        for(int i=0;i<4;i++){
-                            int r=y+dRow[i];
-                            int c=x+dCol[i];
-                            if (Map.getGrid()[c][r]==3) {
-                                attack(player);
-                            }
-                        }
-                    }else{
-                        
-                    }
+    public void moveToTarget(map map, int targetX, int targetY) {
+        List<int[]> path = findPath(map, targetX, targetY);
+        if (path != null && !path.isEmpty()) {
+            int steps = 0; // Biến đếm số bước di chuyển
+            for (int[] step : path) {
+                x = step[0];
+                y = step[1];
+
+                steps++;
+                // Chỉ in ra thông tin sau mỗi 3 bước di chuyển
+                if (steps % 3 == 0) {
+                    System.out.println("Goblin Position after " + steps + " steps: (" + x + ", " + y + ")");
                 }
-                for(int i =0;i<4;i++){
-                    int newRow=row+dRow[i];
-                    int newCol=col+dCol[i];
-                    if (newCol>=0 &&newRow>=0&&newCol<Map.getGridWidth()&&newRow<Map.getGridHeight()) {                    
-                    if (visited[newCol][newRow]==false&&row>=0&&row<Map.getGridHeight()&&col<Map.getGridWidth()&&col>=0) {
-                        q.add(new int[]{newCol,newRow});
-                        visited[newCol][newRow]=true;
-    
-                    }
-                }
+
+                // Tạm dừng để mô phỏng thời gian di chuyển, chia thời gian tạm dừng theo tốc độ
+                try {
+                    Thread.sleep((long) (1000 / speed));
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                 }
             }
-            
         }
     }
-    // Phương thức tấn công
-    public void attack(Player player) {
-      
-            int damage = attackPoint - player.getDefensePoint();
-            if (damage > 0) {
-                player.setHP(player.getHP()-damage);; // Giảm HP của người chơi
-                System.out.println(name + " đã tấn công người chơi gây ra " + damage + " sát thương!");
-            } 
-            return;
+
+
+
+
+    public void scan(map Map, Player player) {
+        if (takedamage()) {
+            int[] dRow = {-1, 1, 0, 0};
+            int[] dCol = {0, 0, -1, 1};
+            Queue<int[]> q = new LinkedList<>();
+            boolean[][] visited = new boolean[Map.getGridWidth()][Map.getGridHeight()];
+            q.add(new int[]{x, y});
+            visited[x][y] = true;
+            int steps = 0;
+            while (!q.isEmpty()) {
+                int[] current = q.poll();
+                int row = current[0];
+                int col = current[1];
+
+                steps ++;
+
+                // Chỉ in ra thông tin khi Goblin di chuyển 3 ô
+                if (steps % 3 == 0) {
+                    System.out.println("Goblin Position after " + steps + " steps: (" + row + ", " + col + ")");
+                }
+
+
+                if (row < Map.getGridHeight() && col < Map.getGridWidth()) {
+                    if (Map.getGrid()[row][col] == 3) {
+                        for (int i = 0; i < 4; i++) {
+                            int r = y + dRow[i];
+                            int c = x + dCol[i];
+                            if (Map.getGrid()[r][c] == 3) {
+                                attack(player);
+                                System.out.println("Attacking at position: (" + r + ", " + c + ")");
+                            }
+                        }
+                    }
+                }
+                for (int i = 0; i < 4; i++) {
+                    int newRow = row + dRow[i];
+                    int newCol = col + dCol[i];
+                    if (newCol >= 0 && newRow >= 0 && newCol < Map.getGridWidth() && newRow < Map.getGridHeight() && !visited[newCol][newRow]) {
+                        visited[newCol][newRow] = true;
+
+                        if (Math.abs(newRow - x) <= 1 && Math.abs(newCol - y) <= 1) {
+                            int damage = 10;
+                            player.setHP(player.getHP() - damage);
+                            System.out.println("Monster has attacked player for " + damage + " damage at position: (" + newRow + ", " + newCol + ")");
+                            return;
+                        }
+
+                        q.offer(new int[]{newRow, newCol});
+                    }
+                }
+            }
         }
+    }
+
 
     public boolean takedamage(){
         if (HP<initHP) {
@@ -138,8 +184,8 @@ public class Monster {
     }
     @Override
     public String toString() {
-        return ("Tên: " + name + ", HP: " + HP + ", Tấn công: " + attackPoint +
-                ", Phòng thủ: " + defense + ", Tốc độ: " + speed + ", Tọa độ: (" + x + ", " + y + ")");
+        return ("Name: " + name + ", HP: " + HP + ", Attack: " + attackPoint +
+                ", Defense: " + defense + ", Speed: " + speed + ", Coordinates: (" + x + ", " + y + ")");
     }
 
     // Getter và Setter nếu cần
@@ -197,4 +243,15 @@ public class Monster {
     public String getName(){
         return name;
     }
+
+    public void attack(Player player) {
+        int damage = this.attackPoint - player.getDefense();
+        if (damage > 0) {
+            player.setHP(player.getHP() - damage);
+            System.out.println(name + " has attacked " + player.getName() + " for " + damage + " damage!");
+        } else {
+            System.out.println(name + "'s attack was too weak to damage " + player.getName());
+        }
+    }
+
 }

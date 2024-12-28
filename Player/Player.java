@@ -22,6 +22,8 @@ public class Player {
     private int x;
     private int y;
     private float range;
+    private int defense;
+
 
     // Static attribute
     private static int max_items_number = 16; // Maximum items in inventory
@@ -35,6 +37,7 @@ public class Player {
         this.maxMP = MP;
         this.HP = HP;
         this.MP = MP;
+        this.defense = defense;
         this.originalAttackPoint = attackPoint;
         this.originalDefensePoint = defensePoint;
         this.attackPoint = attackPoint;
@@ -347,6 +350,13 @@ public class Player {
 
     public static void setMaxSkillsNumber(int maxSkillsNumber) {
         max_skills_number = maxSkillsNumber;
+    }
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 
 }

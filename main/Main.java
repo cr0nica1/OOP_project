@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class Main {
     Monster monster;
-    
+
     public static void main (String [] args){
-        
+
         String ins=new String();
         int status=0;
         Scanner scanner=new Scanner(System.in);
@@ -16,7 +16,7 @@ public class Main {
         }else{
             ins="start";
         }
-       
+
         if (ins=="start") {
             starting(scanner);
         }
@@ -27,7 +27,7 @@ public class Main {
     }
     public static void starting(Scanner scanner){
         Player mainplayer=new Player("Player_1");
-        map default_map= new map();
+        map default_map= new map(10,10,9,9,5);
         gameSystem sys=new gameSystem(default_map, mainplayer, 0, 0);
         Marketplace market=new Marketplace();
         AncientTemple temple=new AncientTemple();
@@ -36,13 +36,14 @@ public class Main {
         int status=1;
         while (status==1) {
             System.out.println("nhap instruction");
-            
-            
+
+
+
             String instruction=scanner.nextLine();
-            
-            
+
+
             if (instruction .equals("w") || instruction.equals("a")||instruction.equals("s")||instruction.equals("d")) {
-              
+
                 mainplayer.move(instruction, sys);
                 continue;
             }
@@ -69,24 +70,13 @@ public class Main {
                     sys.process_learn_skill(temple,scanner);
                     break;
                 case "player status":
-                    mainplayer.printStatus();
-                    break;
-                case "using potion":
-                    sys.process_use_potion(scanner);
                     break;
                 default:
                     System.out.println("Invalid instruction!!");
             }
-            
-            
-            
-            
-            
-            
-            
-          
+            default_map.updateMonsters();
         }
-        
+
     }
-    
+
 }
