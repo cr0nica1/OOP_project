@@ -17,6 +17,9 @@ public class Player {
     private int x;
     private int y;
     private float range;
+  // Tham chiếu đến bản đồ hiện tại
+  // Lưu đối tượng gameMap
+
 
     // Static attribute
     private static int max_items_number = 16; // Maximum items in inventory
@@ -37,13 +40,13 @@ public class Player {
         this.availableSkill= new ArrayList<>();
         this.x = 0;
         this.y = 0;
-
         this.range = 1.0f;
+
 
     }
 
     public Player(String name) {
-        this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10000);
+        this(name, null, 1000, 1000, 150, 30, 1.0f, 1, 10000);
     }
 
     // Methods
@@ -59,7 +62,7 @@ public class Player {
         }
         sys.processMove(x, y,oldx,oldy);
     }
-    
+
 
 
     public void attack(Monster monster) {
@@ -67,10 +70,13 @@ public class Player {
         if (damage>0) {
             monster.setHP(monster.getHP()-damage);
             System.out.println("Player " + name + "dealt "+ damage + " damages!");
-
         }
-        
+        // Phương thức để cập nhật quái vật
+        // Phương thức để cập nhật quái vật
+
     }
+
+
     public boolean checking_inventory( Items items){
         for( Items m:inventory){
             if (items.getType()==m.getType()) {
