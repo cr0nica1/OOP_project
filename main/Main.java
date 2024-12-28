@@ -3,9 +3,10 @@ import java.util.Scanner;
 
 public class Main {
     Monster monster;
-    
+
+
     public static void main (String [] args){
-        
+
         String ins=new String();
         int status=0;
         Scanner scanner=new Scanner(System.in);
@@ -29,7 +30,7 @@ public class Main {
         Player mainplayer=new Player("Player_1");
         int[][] grid1=
                 {
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                    {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                     {7, 0, 0, 5, 0, 1, 0, 0, 0, 0},
                     {0, 0, 5, 0, 0, 1, 0, 5, 0, 0},
                     {0, 0, 1, 5, 0, 1, 0, 0, 0, 0},
@@ -41,7 +42,7 @@ public class Main {
                     {0, 0, 1, 0, 0, 5, 0, 0, 0, 9}
                 };
         int[][] grid2={
-                    {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                    {3, 0, 0, 0, 0, 0, 0, 0, 1, 0},
                     {7, 0, 0, 5, 0, 1, 0, 0, 1, 0},
                     {0, 0, 5, 0, 0, 1, 0, 5, 1, 0},
                     {0, 0, 1, 5, 0, 1, 0, 0, 0, 0},
@@ -53,7 +54,7 @@ public class Main {
                     {0, 0, 1, 0, 0, 5, 0, 5, 0, 9}
         };
         int[][] grid3={
-            {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+            {3, 0, 0, 0, 0, 1, 0, 0, 0, 0},
             {7, 1, 0, 0, 0, 0, 0, 0, 1, 0},
             {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
             {0, 0, 1, 0, 5, 1, 0, 0, 0, 0},
@@ -71,22 +72,28 @@ public class Main {
         Map2.setPreviousMap(Map1);
         Map2.setNextMap(Map3);
         Map3.setPreviousMap(Map2);
-        
+
+
+
+
+
         gameSystem sys=new gameSystem(Map1, mainplayer, 0, 0);
         Marketplace market=new Marketplace();
         AncientTemple temple=new AncientTemple();
         Drugs drugs=new Drugs();
         mainplayer.setInventory(mainplayer.getInventory() , sys);
         int status=1;
-
+        map currentMap = Map1;
         while (status==1) {
             System.out.println("nhap instruction");
 
             
             
             String instruction=scanner.nextLine();
-            
-            
+
+
+
+
             if (instruction .equals("w") || instruction.equals("a")||instruction.equals("s")||instruction.equals("d")) {
               
                 mainplayer.move(instruction, sys);
@@ -99,8 +106,10 @@ public class Main {
                         sys.setMap(sys.getMap().getNextMap());
                         mainplayer.setX(0);
                         mainplayer.setY(0);
-                        
+
+
                     }
+                    
                     
                 }
    
@@ -130,6 +139,7 @@ public class Main {
                     break;
                 case "attack":
                     sys.process_attack();
+                    currentMap.updateMonsters();
                     break;
                 case "end":
                     status=0;
