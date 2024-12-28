@@ -27,7 +27,7 @@ public class Main {
     }
     public static void starting(Scanner scanner){
         Player mainplayer=new Player("Player_1");
-        map default_map= new map(10,10,9,9,5);
+        map default_map= new map(10,10,9,9,9);
         gameSystem sys=new gameSystem(default_map, mainplayer, 0, 0);
         Marketplace market=new Marketplace();
         AncientTemple temple=new AncientTemple();
