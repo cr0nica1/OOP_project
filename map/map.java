@@ -9,10 +9,9 @@ public class map {
     private List<Monster> monsters; // Mảng quái vật
     private int endpointX; // Tọa độ x của điểm kết thúc
     private int endpointY; // Tọa độ y của điểm kết thúc
-    private int nextMap;
-    private int previousMapY;
-    private int previousMapX;
+    private map nextMap;
     private map previousMap;
+
 
 
     // Hằng số cho giá trị quái vật
@@ -23,14 +22,12 @@ public class map {
 // Constructor với tham số int[][]
 
 
-    public map(int[][] grid, int endpointX, int endpointY, int previousMapX, int previousMapX, int monsterCount) {
-
-
+    public map(int[][] grid,int endpointX,int endpointY) {
 
         int[][] grid1=
                 {
                         {3, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 7, 0, 5, 0, 1, 0, 0, 0, 0},
+                        {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
                         {0, 0, 5, 0, 0, 1, 0, 5, 0, 0},
                         {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
                         {0, 0, 5, 0, 0, 1, 0, 0, 0, 0},
@@ -38,11 +35,11 @@ public class map {
                         {0, 5, 0, 0, 0, 0, 5, 1, 0, 0},
                         {0, 0, 1, 5, 0, 5, 0, 1, 0, 0},
                         {0, 0, 1, 0, 0, 0, 5, 0, 0, 0},
-                        {0, 0, 1, 0, 0, 5, 0, 0, 0, 9}
+                        {0, 0, 1, 0, 0, 5, 0, 0, 0, 0}
                 };
-        map Map1=new map(grid1,10,10,7,16);
+        map Map1=new map(grid1,10,10);
         int[][] grid2={
-                {7, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
                 {0, 0, 0, 5, 0, 1, 0, 0, 1, 0},
                 {0, 3, 5, 0, 0, 1, 0, 5, 1, 0},
                 {0, 0, 1, 5, 0, 1, 0, 0, 9, 0},
@@ -51,13 +48,13 @@ public class map {
                 {0, 5, 0, 0, 0, 0, 5, 0, 1, 0},
                 {5, 0, 1, 5, 0, 5, 0, 0, 1, 0},
                 {0, 0, 1, 0, 0, 0, 5, 0, 1, 0},
-                {0, 0, 1, 0, 0, 5, 0, 5, 0, 9 }
+                {0, 0, 1, 0, 0, 5, 0, 5, 0, 0}
         };
-        map Map2=new map(grid2,10,10,7,5);
+        map Map2=new map(grid2,10,10);
         int[][] grid3={
                 {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
                 {0, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-                {0, 7, 0, 5, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 5, 0, 1, 0, 0, 0, 0},
                 {0, 0, 1, 0, 5, 1, 0, 0, 9, 0},
                 {0, 0, 1, 0, 0, 0, 1, 0, 0, 0},
                 {1, 0, 0, 0, 0, 5, 0, 1, 0, 0},
@@ -66,7 +63,7 @@ public class map {
                 {0, 1, 0, 5, 0, 0, 1, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 9}
         };
-        map Map3=new map(grid3,10,10,7,5);
+        map Map3=new map(grid3,10,10);
         Map1.setNextMap(Map2);
         Map2.setPreviousMap(Map1);
         Map2.setNextMap(Map3);
@@ -86,16 +83,36 @@ public class map {
         displayGrid();
     }
 
+
+
+
     // Constructor với tham số
-    public map(int rows, int cols, int endpointX, int endpointY, int monsterCount, int previousMapY, int previousMapX ) {
-        this.previousMapY = previousMapY;
-        this.previousMapX = previousMapX;
+    // Constructor với tham số
+    public map(int rows, int cols, int endpointX, int endpointY, int monsterCount) {
         this.grid = new int[rows][cols];
         this.monsters = new ArrayList<>();
         this.endpointX = endpointX;
         this.endpointY = endpointY;
 
+        // Thêm code để khởi tạo player position
+        grid[0][0] = 3; // Player starts at (0,0)
 
+        // Thêm code để khởi tạo monsters ngẫu nhiên
+        int monstersPlaced = 0;
+        while (monstersPlaced < monsterCount) {
+            int randomX = (int)(Math.random() * rows);
+            int randomY = (int)(Math.random() * cols);
+
+            // Chỉ đặt monster nếu ô trống (giá trị = 0)
+            if (grid[randomX][randomY] == 0) {
+                grid[randomX][randomY] = 5;  // 5 là giá trị đại diện cho monster
+                monsters.add(new Monster("Monster", 100, 10, 5, 1.0f, randomX, randomY));
+                monstersPlaced++;
+            }
+        }
+
+        // Hiển thị map ban đầu
+        displayGrid();
     }
 
 
@@ -115,6 +132,7 @@ public class map {
             }
         }
     }
+    //cap nhat xem nguoi choi dang o dau
     // Kiểm tra tường bị chặn trước khi cập nhật vị trí người chơi
     public void updatePlayerPosition(int oldX, int oldY, int newX, int newY) {
         if (grid[newX][newY] != 1) { // Kiểm tra ô mới không phải là tường (giá trị 1 đại diện cho tường)
@@ -125,13 +143,26 @@ public class map {
             System.out.println("Cannot move to the position (" + newX + ", " + newY + ") because it is blocked.");
         }
     }
-
     // Phương thức thiết lập bản đồ trước đó
-    public void setPreviousMap(map previousMap) {
-        this.previousMap = previousMap;
+// Phương thức quay lại bản đồ trước đó
+    public void setPreviousMapPosition(int x, int y) { grid[x][y] = 7; }
+    public boolean checkpreviousMap(Player player) {
+        if (grid[player.getX()][player.getY()] == 7) {
+            if ((player.getX() == 0 && player.getY() == -1) || (player.getX() == -1 && player.getY() == 0)) {
+                if (previousMap != null) {
+                    System.out.println("Quay lại bản đồ trước đó...");
+                    return true; // Trả về bản đồ trước đó
+                } else {
+                    System.out.println("Không có bản đồ trước đó để quay lại.");
+                    return false;
+                }
+            }
+            return false;
+        }
+        return false;
     }
 
-
+    // Phương thức quay lại bản đồ trước đó
     // Phương thức load map
     public map loadMap(Player player) {
 
@@ -149,23 +180,8 @@ public class map {
         return null;
 
     }
-    // Phương thức quay lại bản đồ trước đó
-    public void setPreviousMapPosition(int x, int y) { grid[x][y] = 7; }
-    public boolean checkpreviousMap(Player player) {
-        if (grid[player.getX()][player.getY()] == 7) {
-            if ((player.getX() == 0 && player.getY() == -1) || (player.getX() == -1 && player.getY() == 0)) {
-                if (previousMap != null) {
-                    System.out.println("Quay lại bản đồ trước đó...");
-                    return true; // Trả về bản đồ trước đó
-                } else {
-                    System.out.println("Không có bản đồ trước đó để quay lại.");
-                    return false;
-                }
-            }
-            return false;
-        }
-        return false;
-    }
+
+
     //cap nhat tinh trang quai vat
     public void updateMonsters() {
         for (Monster monster : monsters) {
@@ -177,7 +193,6 @@ public class map {
         }
         monsters.removeIf(monster -> monster.getHP() <= 0); // Loại bỏ quái vật đã chết khỏi danh sách
     }
-
 
     // Phương thức kiểm tra điểm kết thúc
     public boolean checkEndpoint(Player player) {
@@ -224,10 +239,6 @@ public class map {
 
     public int getEndpointY() {
         return endpointY;
-    }
-
-    public int getPreviousMapY() {
-        return previousMapY;
     }
     public String getName(){
         return name;
@@ -279,4 +290,7 @@ public class map {
         return this.nextMap;
     }
 
+    public void setPreviousMap(map previousMap) {
+        this.previousMap = previousMap;
+    }
 }
