@@ -1,0 +1,8 @@
+-To start press F5 to run.
+-Press a number !=0 to run the code.
+-When u press a number !=0,the terminal will display "instruction" then u will use the following
+commands below:
++A to go left 1 step, D to go right 1 step, W to go up 1 step and S to go down 1 step.
++press "marketplace" to open the market and you will see the whole items like weapon,armor
+press "drugs" to open the drugs to see the potion
+and you can press "buy weapon" , "buy armor" ,"buy potion" ,press 1,2,3.... to buy it

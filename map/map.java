@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -10,29 +11,32 @@ public class map {
     private int endpointY; // Tọa độ y của điểm kết thúc
     private map nextMap;
     private map previousMap; // Bản đồ trước đó
-    // Hằng số cho giá trị quái vật
-    //private static final int MONSTER_VALUE = 5; // Giá trị đại diện cho quái vật
-    //private static final int PLAYER_VALUE = 3; // Giá trị đại diện cho người chơi
-    //private static final int OBSTACLE_VALUE = 1; // Giá trị đại diện cho chướng ngại vật
-
+    private int backmapX;
+    private int backmapY;
     // Constructor mặc định
-    public map() {
-
-        this(5, 9, 6, 6, 3); // Kích thước mặc định và số lượng quái vật mặc định
-        // grid=[[    ]   
-        //        [    ]    ]
-        // monster[]=[   ,      ,        ,      ]
-    }
-
-    // Constructor với tham số
-    public map(int rows, int cols, int endpointX, int endpointY, int monsterCount) {
-        this.grid = new int[rows][cols];
-        this.monsters = new ArrayList<>();
+    public map(String name, int[][] grid,int endpointX,int endpointY, int backmapX, int backmapY) {
+        this.name=name;
+        this.grid = grid;
         this.endpointX = endpointX;
         this.endpointY = endpointY;
+        this.monsters = new ArrayList<>();
+        this.backmapX=backmapX;
+        this.backmapY=backmapY;
 
+
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                if (grid[i][j] == 5) {
+                    monsters.add(new Monster("Monster", 100, 10, 5, 1.0f, i, j));
+                }
+            }
+        }
 
     }
+
+
+
+
     // Khởi tạo grid với dữ liệu cụ thể
     public void remove_monster(){
         int x;
@@ -40,25 +44,16 @@ public class map {
         String name; int HP;int attackPoint;int defense; float speed;
         for(Monster monster:monsters){
             if (monster.die()) {
-                x=monster.getInitX();
-                y=monster.getInitY();
                 name=monster.getName();
                 HP=monster.getHP();
                 attackPoint=monster.getAttackPoint();
                 defense=monster.getDefense();
                 speed=monster.getSpeed();
                 monster=null;
-
-                // bộ đếm thời gian
-
-                respawn(name, HP, attackPoint, defense, speed, x, y);
             }
         }
     }
-    public void respawn( String name, int HP,int attackPoint,int defense, float speed ,int x, int y){
-        Monster monster=new Monster(name,HP,attackPoint,defense,speed ,x,y);
-        monsters.add(monster);
-    }
+    //cap nhat xem nguoi choi dang o dau
     public void updatePlayerPosition(int oldX, int oldY, int newX, int newY) {
         grid[oldX][oldY] = 0; // Clear old position
         grid[newX][newY] = 3; // Set new position
@@ -72,52 +67,82 @@ public class map {
     // Phương thức quay lại bản đồ trước đó
     // Phương thức load map
     public map loadMap(Player player) {
-        if (check_previousMap(player)==true) {
-            player.setX(previousMap.endpointX-1);
-            player.setY(previousMap.endpointY-1);
-            return previousMap;
-            
-        }
+
         if (checkEndpoint(player)==true) {
             player.setX(0);
             player.setY(0);
             return nextMap;
         }
+        if (checkpreviousMap(player)==true) {
+            player.setX(previousMap.getGridHeight()-2);
+            player.setY(previousMap.getGridWidth()-2);
+            return previousMap;
+
+        }
         return null;
-        
+
     }
 
-    public boolean check_previousMap(Player player){
-        if ((player.getX() == 0 && player.getY() == -1) || (player.getX() == -1 && player.getY() == 0)) {
-            if (previousMap != null) {
-                System.out.println("Quay lại bản đồ trước đó...");
-                return true; // Trả về bản đồ trước đó
-            } else {
-                System.out.println("Không có bản đồ trước đó để quay lại.");
+    public boolean checkpreviousMap(Player player) {
+        if (player.getX()==backmapX&&player.getY()==backmapY) {
+            if (previousMap!=null) {
+
+
+
+                System.out.println("Loading previous map"+previousMap.getName());
+                return true;
+            }
+            else{
+                System.out.println("No previous map");
                 return false;
             }
         }
         return false;
     }
+    //cap nhat tinh trang quai vat
+    // Cập nhật phương thức updateMonsters trong lớp map
+    public void updateMonsters() {
+        for (Monster monster : monsters) {
+            if (monster.getHP() <= 0) {
+                grid[monster.getX()][monster.getY()] = 0; // Đặt ô tương ứng thành 0
+                System.out.println("Monster " + monster.getName() + " has been removed from the map at position ("
+                        + monster.getX() + ", " + monster.getY() + ").");
+            }
+        }
+        monsters.removeIf(monster -> monster.getHP() <= 0); // Loại bỏ quái vật đã chết khỏi danh sách
+        displayGrid(); // Hiển thị trạng thái bản đồ sau khi cập nhật
+    }
 
 
-// Phương thức kiểm tra điểm kết thúc
+
+
+    // Phương thức kiểm tra điểm kết thúc
     public boolean checkEndpoint(Player player) {
         if (player.getX()==endpointX&&player.getY()==endpointY) {
             if (nextMap!=null) {
-                System.out.println("Đang tải bản đồ"+nextMap.getName());
+                System.out.println("\n" +
+                        "Loading map"+nextMap.getName());
                 return true;
 
             }else{
-                System.out.println("không còn bản đồ.");
+                System.out.println("There are no more maps.");
                 return false;
             }
         }
         return false;
 
-    
+
     }
-// Getter cho kích thước grid
+    // Getter cho kích thước grid
+    public map getPreviousMap() {
+        return this.previousMap;
+    }
+    public int getBackmapX() {
+        return backmapX;
+    }
+    public int getBackmapY() {
+        return backmapY;
+    }
     public int [][] getGrid(){
         return grid;
     }
@@ -128,7 +153,7 @@ public class map {
     public int getGridHeight() {
         return grid[0].length;
     }
-  
+
 
     // Getter cho số lượng quái vật
     public int getMonstersCount() {
@@ -173,7 +198,7 @@ public class map {
             System.out.println("}");
         }
 
-        
+
         System.out.println("--------------------------------------------------------------------------");
     }
     public void displayGrid() {
@@ -186,6 +211,14 @@ public class map {
             System.out.println("}");
         }
         System.out.println("--------------------------------");
+    }
+    // Getter và setter cho nextMap
+    public void setNextMap(map nextMap) {
+        this.nextMap = nextMap;
+    }
+
+    public map getNextMap() {
+        return this.nextMap;
     }
 
 }

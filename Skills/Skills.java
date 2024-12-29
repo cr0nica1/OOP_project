@@ -97,15 +97,6 @@ public class Skills {
         }
 
         // Apply damage and effect to the primary target
-        int damage=this.skillPower - Target.getDefense();
-        if (damage>0) {
-            Target.setHP(Target.getHP()-damage);
-            System.out.println("Player " + player.getName() + "dealt "+ damage + " dameges!");
-        }
-        
-        System.out.println("Casting " + skillName + " on " + Target.getName() + "! Dealt " + damage + " damage.\n");
-
-        // Apply reduced damage to other monsters within skillZone
         
     return null;
     }

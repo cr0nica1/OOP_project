@@ -17,6 +17,9 @@ public class Player {
     private int x;
     private int y;
     private float range;
+  // Tham chiếu đến bản đồ hiện tại
+  // Lưu đối tượng gameMap
+
 
     // Static attribute
     private static int max_items_number = 16; // Maximum items in inventory
@@ -37,20 +40,16 @@ public class Player {
         this.availableSkill= new ArrayList<>();
         this.x = 0;
         this.y = 0;
-
         this.range = 1.0f;
+
 
     }
 
     public Player(String name) {
-        this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10000);
+        this(name, null, 1000, 1000, 150, 30, 1.0f, 1, 10000);
     }
-    // Methods
 
-    @Override
-    public String toString(){
-        return "Player{name='" + name + "', currentMapName='" + currentMapName + "', HP=" + HP + ", MP=" + MP + ", attackPoint=" + attackPoint + ", defensePoint=" + defensePoint + ", speed=" + speed + ", level=" + level + ", gold=" + gold + ", x=" + x + ", y=" + y + ", range=" + range + "}";
-    }
+    // Methods
     public void move(String direction, gameSystem sys) {
         int oldx=this.x;
         int oldy=this.y;
@@ -63,7 +62,7 @@ public class Player {
         }
         sys.processMove(x, y,oldx,oldy);
     }
-    
+
 
 
     public void attack(Monster monster) {
@@ -72,8 +71,12 @@ public class Player {
             monster.setHP(monster.getHP()-damage);
             System.out.println("Player " + name + "dealt "+ damage + " damages!");
         }
-        
+        // Phương thức để cập nhật quái vật
+        // Phương thức để cập nhật quái vật
+
     }
+
+
     public boolean checking_inventory( Items items){
         for( Items m:inventory){
             if (items.getType()==m.getType()) {
@@ -109,7 +112,7 @@ public class Player {
             System.out.println(name+ " drop "+ item.getName());
         }
     }   
-    public void usingDrug(Potion potion) { // Assuming Drug is another class
+    public void usePotion(Potion potion) { // Assuming Drug is another class
         for(int i=0;i<this.inventory.size();i++){
             if (this.inventory.get(i)==potion) {
 
@@ -131,43 +134,23 @@ public class Player {
      
     }
 
-    public String castSkill(Skills skill, List<Monster> monsters) {
-        if (this.MP < skill.getMPcost()){
-            return "Out of money!";
+    public void castSkill(Skills skill, Monster monster) {
+        // Implement skill logic
+        if (MP < skill.getMPcost()) {
+            System.out.println("Not enough MP to cast this skill.");
+            return;
         }
-        this.MP -= skill.getMPcost();
-
-        Monster target = null;
-        double maxHP = 0;
-
-        for(Monster monster : monsters){
-            if (distanceTo(monster) <= skill.getSkillRange() && monster.getHP() > maxHP){
-                target = monster;
-                maxHP = monster.getHP();
-            }
+        MP -= skill.getMPcost();
+        int damage = skill.getSkillPower() - monster.getDefense();
+        if (damage > 0) {
+            monster.setHP(monster.getHP() - damage);
+            System.out.println(name + " used " + skill.getSkillName() + " and dealt " + damage + " damage to " + monster.getName());
+        } else {
+            System.out.println(name + " used " + skill.getSkillName() + " but dealt no damage to " + monster.getName());
         }
-        if (target == null){
-            return "No monster within range to cast skills.";
-        }
+    }
 
-        target.takeDamage(skill.getSkillPower());
-        System.out.println("Casting " + skill.getSkillName() + " on " + target.getName() + "! Dealt " + skill.getSkillPower() + " damage.\n");
-
-        for (Monster monster : monsters)    {
-            if (monster != target && distanceTo(monster) <= skill.getSkillZone()) {
-                            int reduceDamge = (int)(skill.getSkillPower() * 0.5);
-                            monster.takeDamage(reduceDamge);
-                            System.out.println("Dealt " + reduceDamge + " damage to " + monster.getName() + " within the skill zone. \n");
-                        }
-                    }
-                    return "Skill cast successfully!";
-                }
-                private int distanceTo(Monster monster) {
-                    // TODO Auto-generated method stub
-                    throw new UnsupportedOperationException("Unimplemented method 'distanceTo'");
-                }
-            
-                // Getters and setters
+    // Getters and setters
     public float getRange(){
         return range;
     }
@@ -244,6 +227,11 @@ public class Player {
             this.availableSkill = availableSkill;
         } else {
             System.out.println("Skill list exceeds maximum allowed size of " + max_skills_number + ".");
+        }
+    }
+    public void showSkill(){
+        for(Skills skill:availableSkill){
+            System.out.println(skill.getSkillName());
         }
     }
     public int getLevel() {
