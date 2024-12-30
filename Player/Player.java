@@ -43,7 +43,7 @@ public class Player {
     }
 
     public Player(String name) {
-        this(name, null, 1000, 1000, 100, 30, 1.0f, 1, 10000);
+        this(name, null, 1000, 1000, 100, 0, 1.0f, 2, 10000);
     }
 
     // Methods
@@ -282,6 +282,19 @@ public class Player {
 
     public static void setMaxSkillsNumber(int maxSkillsNumber) {
         max_skills_number = maxSkillsNumber;
+    }
+    public void printStatus() {
+     
+        System.out.println("Name: " + name);
+        System.out.println("HP: " + HP);
+        System.out.println("MP: " + MP);
+        System.out.println("Attack Point: " + attackPoint);
+        System.out.println("Defense Point: " + defensePoint);
+        System.out.println("Speed: " + speed);
+        System.out.println("Level: " + level);
+        System.out.println("Gold: " + gold);
+        System.out.println("Current Map: " + currentMapName);
+        System.out.println("Position: (" + x + ", " + y + ")");
     }
 
 }

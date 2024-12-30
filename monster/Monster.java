@@ -21,7 +21,7 @@ public class Monster {
 
 
     // Constructor
-    public Monster(String name, int HP, int attackPoint, int defense, float speed, int x, int y) {
+    public Monster(String name, int HP, int attackPoint, int defense, float speed, int x, int y,int initHP) {
         this.name = name;
         this.HP = HP;
         this.attackPoint = attackPoint;
@@ -29,103 +29,92 @@ public class Monster {
         this.speed = speed;
         this.x = x;
         this.y = y;
-
+        this.initHP=initHP;
 
     }
 
     // Phương thức di chuyển
     public void move() {
-        // Cập nhật tọa độ dựa trên tốc độ và hướng di chuyển
 
         // In ra thông tin di chuyển và tọa độ mới của quái vật
         System.out.println(name + " moving at speed: " + speed + ", new coordinate: (" + x + ", " + y + ")");
     }
-    private List<int[]> tracePath(Map<String,String> parentMap, int endX, int endY){
-        return null;
+    public List<int[]> tracePath(Map<String, String> parentMap, int endX, int endY) {
+        List<int[]> path = new LinkedList<>();
+        String node = endX + "," + endY;
+        while (node != null) {
+            String[] parts = node.split(",");
+            path.add(0, new int[]{Integer.parseInt(parts[0]), Integer.parseInt(parts[1])});
+            node = parentMap.get(node);
+        }
+        return path;
     }
-    public List<int[]> findpath(map m, Player player){
+
+
+    public List<int[]> findPath(map m, int targetX, int targetY) {
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
-        int rows=m.getGrid().length;
-        int cols=m.getGrid()[0].length;
-        int [][] dist=new int[cols][rows];
-        for(int [] row:dist){
+        int rows = m.getGrid().length;
+        int cols = m.getGrid()[0].length;
+        int[][] dist = new int[rows][cols];
+        for (int[] row : dist) {
             Arrays.fill(row, Integer.MAX_VALUE);
         }
-        Map<String,String> parentMap=new HashMap<>();
-        Queue<int[]> q=new LinkedList<>();
-        q.offer(new int[]{x,y,0});
-        dist[x][y]=0;
-        parentMap.put(x+ ","+y, null);
+        Map<String, String> parentMap = new HashMap<>();
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[]{x, y, 0});
+        dist[x][y] = 0;
+        parentMap.put(x + "," + y, null);
         while (!q.isEmpty()) {
-            int [] current=q.poll();
-            int cur_x=current[0];
-            int cur_y=current[1];
-            if (m.getGrid()[cur_x][cur_y]==3) {
-                return tracePath(parentMap,cur_x,cur_y);
+            int[] current = q.poll();
+            int cur_x = current[0];
+            int cur_y = current[1];
+            if (cur_x == targetX && cur_y == targetY) {
+                return tracePath(parentMap, cur_x, cur_y);
             }
-            for(int i=0;i<4;i++){
-                int newX=cur_x+dx[i];
-                int newY=cur_y+dy[i];
-                // Add your logic here for processing newX and newY
+            for (int i = 0; i < 4; i++) {
+                int newX = cur_x + dx[i];
+                int newY = cur_y + dy[i];
+                if (newX >= 0 && newY >= 0 && newX < rows && newY < cols && m.getGrid()[newX][newY] != 1) {
+                    int newDist = dist[cur_x][cur_y] + 1;
+                    if (newDist < dist[newX][newY]) {
+                        dist[newX][newY] = newDist;
+                        q.offer(new int[]{newX, newY});
+                        parentMap.put(newX + "," + newY, cur_x + "," + cur_y);
+                    }
+                }
+
             }
         }
         return null;
     }
-    public void scan(map Map,Player player){
-        if (takedamage()==true) {
-            int [] dRow={-1,1,0,0};
-            int [] dCol={0,0,-1,1};
-            Queue<int[]>q=new LinkedList<>();
-            boolean[][] visited= new boolean[Map.getGridWidth()][Map.getGridHeight()];
-            q.add(new int[]{x,y});
-            visited[x][y]=true;
-            while (!q.isEmpty()) {
-                int []current=q.poll();
-                int row=current[0];
-                int col=current[1];
-                
-                if (row<(Map.getGridHeight())&&col<(Map.getGridWidth())&&row<Map.getGridWidth()&&col<Map.getGridHeight()) {
-                    if (Map.getGrid()[col][row]==3) {
-                        int [] delta={1,-1};
-                        for(int i=0;i<4;i++){
-                            int r=y+dRow[i];
-                            int c=x+dCol[i];
-                            if (Map.getGrid()[c][r]==3) {
-                                attack(player);
-                            }
-                        }
-                    }else{
+    public void move(map m,Player player) {
+        List<int[]> path = findPath(m, player.getX(), player.getY());
+        if (Math.abs( x - player.getX()) <= 1 && Math.abs(y - player.getY()) <= 1) {
+            attack(player);
+        }
+        if (takedamage()) {
+            System.out.println("Monster " + name + " has taken damage!");
+            if (path != null) {
+                int c=0;
+                while (c<path.size()) {
+                    
+                    int[] next = path.get(c);
+                    if (m.getGrid()[next[0]][next[1]] == 0) {
+                        int oldx = x;
+                        int oldy = y;
+                        x = next[0];
+                        y = next[1];
+                        m.updatemonstermove(oldx, oldy, x, y);
+                        break;
+                       
                         
                     }
-                }
-                for(int i =0;i<4;i++){
-                    int newRow=row+dRow[i];
-                    int newCol=col+dCol[i];
-                    if (newCol>=0 &&newRow>=0&&newCol<Map.getGridWidth()&&newRow<Map.getGridHeight()) {                    
-                    if (visited[newCol][newRow]==false&&row>=0&&row<Map.getGridHeight()&&col<Map.getGridWidth()&&col>=0) {
-                        q.add(new int[]{newCol,newRow});
-                        visited[newCol][newRow]=true;
-    
-                    }
-                }
-                }
+                    c++;
+                };
             }
-            
         }
     }
-    // Phương thức tấn công
-    public void attack(Player player) {
-      
-            int damage = attackPoint - player.getDefensePoint();
-            if (damage > 0) {
-                player.setHP(player.getHP()-damage);; // Giảm HP của người chơi
-                System.out.println(name + " has attacked Player " + damage + " damage!");
-            } 
-            return;
-        }
-
-
 
 
     public boolean takedamage(){
@@ -201,4 +190,16 @@ public class Monster {
     public String getName(){
         return name;
     }
+
+    public void attack(Player player) {
+        int damage = this.attackPoint - player.getDefensePoint();
+        if (damage > 0) {
+            player.setHP(player.getHP() - damage);
+            System.out.println(name + " has attacked " + player.getName() + " for " + damage + " damage!");
+            System.out.println(" HP: " + player.getHP());
+        } else {
+            System.out.println(name + "'s attack was too weak to damage " + player.getName());
+        }
+    }
+
 }

@@ -51,6 +51,7 @@ public class Main {
                     {5, 0, 1, 5, 0, 5, 0, 0, 1, 0},
                     {0, 0, 1, 0, 0, 0, 5, 0, 1, 0},
                     {0, 0, 1, 0, 0, 5, 0, 5, 0, 9}
+        
         };
         int[][] grid3={
             {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
@@ -81,12 +82,7 @@ public class Main {
 
         while (status==1) {
             System.out.println("nhap instruction");
-
-            
-            
-            String instruction=scanner.nextLine();
-            
-            
+            String instruction=scanner.nextLine();            
             if (instruction .equals("w") || instruction.equals("a")||instruction.equals("s")||instruction.equals("d")) {
               
                 mainplayer.move(instruction, sys);
@@ -99,11 +95,8 @@ public class Main {
                         sys.setMap(sys.getMap().getNextMap());
                         mainplayer.setX(0);
                         mainplayer.setY(0);
-                        
                     }
-                    
                 }
-   
                 if (mainplayer.getX()==sys.getMap().getBackmapX() && mainplayer.getY()==sys.getMap().getBackmapY()) {
                     System.out.println("You have reached the backmap of the map");
                     if (sys.getMap().getPreviousMap()!=null) {
@@ -115,7 +108,9 @@ public class Main {
                     }
                     
                 }
-               
+                for (Monster m:sys.getMap().getMonsters()){
+                    m.move(sys.getMap(), mainplayer);
+                }      
                 continue;
             }
             switch (instruction) {
@@ -141,13 +136,14 @@ public class Main {
                     sys.process_learn_skill(temple,scanner);
                     break;
                 case "player status":
+                    mainplayer.printStatus();
                     break;
                 default:
                     System.out.println("Invalid instruction!!");
             }
-           
-        }
-        
+            for (Monster m:sys.getMap().getMonsters()){
+                m.move(sys.getMap(), mainplayer);
+            }      
+        }        
     }
-    
 }

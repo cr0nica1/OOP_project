@@ -27,7 +27,7 @@ public class map {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] == 5) {
-                    monsters.add(new Monster("Monster", 100, 10, 5, 1.0f, i, j));
+                    monsters.add(new Monster("Monster", 100, 10, 5, 1.0f, i, j,100));
                 }
             }
         }
@@ -111,7 +111,11 @@ public class map {
         monsters.removeIf(monster -> monster.getHP() <= 0); // Loại bỏ quái vật đã chết khỏi danh sách
     }
 
-
+    public void updatemonstermove(int x, int y, int newx, int newy) {
+        grid[x][y] = 0;
+        grid[newx][newy] = 5;
+        displayGrid();
+    }
     // Phương thức kiểm tra điểm kết thúc
     public boolean checkEndpoint(Player player) {
         if (player.getX()==endpointX&&player.getY()==endpointY) {
@@ -141,6 +145,9 @@ public class map {
     }
     public int [][] getGrid(){
         return grid;
+    }
+    public void setGrid(int[][] grid) {
+        this.grid = grid;
     }
     public int getGridWidth() {
         return grid.length;

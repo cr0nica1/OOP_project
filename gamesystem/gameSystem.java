@@ -218,6 +218,7 @@ public class gameSystem {
                 Monster monster=scan_monster(skill.getSkillRange());
                 if (monster!=null) {
                     player.castSkill(skill, monster);
+                    System.out.println(monster.toString());
                     return;
                     
                 }
