@@ -103,12 +103,13 @@ public class map {
     public void updateMonsters() {
         for (Monster monster : monsters) {
             if (monster.getHP() <= 0) {
-                grid[monster.getX()][monster.getY()] = 0; // Cập nhật ô thành 0
-                System.out.println("Monster " + monster.getName() + " has been removed from the map.");
-                displayGrid();
+                grid[monster.getX()][monster.getY()] = 0; // Đặt ô tương ứng thành 0
+                System.out.println("Monster " + monster.getName() + " has been removed from the map at position ("
+                        + monster.getX() + ", " + monster.getY() + ").");
             }
         }
         monsters.removeIf(monster -> monster.getHP() <= 0); // Loại bỏ quái vật đã chết khỏi danh sách
+        displayGrid(); // Hiển thị trạng thái bản đồ sau khi cập nhật
     }
 
     public void updatemonstermove(int x, int y, int newx, int newy) {

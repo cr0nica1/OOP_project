@@ -125,6 +125,7 @@ public class Main {
                     break;
                 case "attack":
                     sys.process_attack();
+                    sys.getMap().updateMonsters();
                     break;
                 case "end":
                     status=0;
