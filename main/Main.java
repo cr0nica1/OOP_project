@@ -131,7 +131,7 @@ public class Main {
                     sys.getMap().updateMonsters();
                     break;
                 case "end":
-                    status=0;
+                    System.exit(0);
                     break;
                 case "skill":
                     sys.process_use_skill(scanner);
