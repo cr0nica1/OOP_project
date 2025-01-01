@@ -8,10 +8,11 @@ public class Main {
         
         String ins=new String();
         int status=0;
+        System.out.println("Type 0 to exit the game or other number to start the game");
         Scanner scanner=new Scanner(System.in);
         status=scanner.nextInt();
         scanner.nextLine();
-        System.out.println("Type 0 to exit the game or other number to start the game");
+        
         if (status==0) {
             ins="exit";
         }else{
