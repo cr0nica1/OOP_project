@@ -46,7 +46,7 @@ public class Player {
     }
 
     public Player(String name) {
-        this(name, null, 1000, 1000, 100, 0, 1.0f, 2, 10000);
+        this(name, null, 200, 100, 70, 0, 1.0f, 2, 10000);
     }
 
     // Methods
@@ -109,7 +109,7 @@ public class Player {
             System.out.println(name+ " drop "+ item.getName());
         }
     }   
-    public void usePotion(Potion potion) { // Assuming Drug is another class
+    public void usePotion(Potion potion) { 
         for(int i=0;i<this.inventory.size();i++){
             if (this.inventory.get(i)==potion) {
 

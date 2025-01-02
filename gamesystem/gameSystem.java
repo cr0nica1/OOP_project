@@ -248,7 +248,7 @@ public class gameSystem {
             int [] current =q.poll();
             int row=current[0];
             int col=current[1];
-            if (row>(player.getX()+range)&&col>(player.getY()+range)) {
+            if (Math.abs(row-player.getX())>range||Math.abs(col-player.getY())>range) {
                 return null;
             }
             
