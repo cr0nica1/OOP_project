@@ -156,7 +156,7 @@ public class Main {
                 mainplayer.setMP(mainplayer.getMP()+5);
                 
             }   
-            if (mainplayer.getHP()<0) {
+            if (mainplayer.getHP()<=0) {
                 System.out.println("You are dead");
                 System.exit(0);
             } 
